@@ -11,3 +11,7 @@ def home():
 @app.get('/profile')
 def profile():
     return render_template('profile.html')
+
+@app.get('/signup')
+def signup():
+    return render_template('signup.html')

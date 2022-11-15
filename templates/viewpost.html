@@ -12,6 +12,8 @@
     background: #eee;
     overflow-x: hidden;
     padding: 8px 0;
+    width:13%;
+    float: left;
   }
   
   .sidenav a {
@@ -26,13 +28,47 @@
     color: #064579;
   }
   
+  
+  .divcenter{
+    margin: 0 auto;
+    width:69%;
+  }
+  .divright{
+    float: right;
+    width:14%;
+  }
+  
 </style>
-<h1>Post View</h1>
-<div class="sidenav">
-    <a href="#about">Sidebar 1</a>
-    <a href="#services">Sidebar 2</a>
-    <a href="#clients">Sidebar 3</a>
-    <a href="#contact">Sidebar 4</a>
-  </div>
+
+
+
+  <body>
+    <header>
+      Post Title
+    </header>
+    <div class="sidenav">
+      <label>Menu</label>
+      <form action="/profile">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <a href="#about">Sidebar 1</a>
+      <a href="#services">Sidebar 2</a>
+      <a href="#clients">Sidebar 3</a>
+      <a href="#contact">Sidebar 4</a>
+    </div>
+
+    <div class ="divcenter">
+      <h1>Burn Post Title Filler</h1>
+      <h6>Poster's username</h6>
+      <p style="border-width:1px; border-style:solid;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione perferendis id sit culpa ea aspernatur omnis tenetur magnam, ad molestias aut veniam, eius fugit vel! Aliquid culpa numquam nulla veritatis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!</p>
+      
+    </div>
+
+    <div class="divright">
+      <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!</p>
+    </div>
+    
+  </body>
 {% endblock %}
 

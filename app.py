@@ -22,3 +22,7 @@ def signup():
 @app.get('/login')
 def login():
     return render_template('login.html')
+
+@app.get('/viewpost')
+def viewpost():
+    return render_template('viewpost.html')

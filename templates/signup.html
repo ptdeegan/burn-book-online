@@ -2,6 +2,51 @@
 
 {% block body %}
 
-<h1>Sign-up Page</h1>
+<div class="row" style="height: 645px">
+  <div class="col">
+    <img src="../static/signup.jpeg" alt="IDK" height="100%" width="90%">
+  </div>
+  <div class="col align-self-center">
+    <h1>Feel the Burn, Join BurnBook Today!</h1>
+    <p>Let out all of your burning hot takes in a completely anonymous forum!</p>
+    <form>
+        <div class="form-group row">
+          <label for="newUsername" class="col-sm-2 col-form-label">Username</label>
+          <div class="col-sm-9">
+            <input type="username" class="form-control" id="newUsername" placeholder="Username" width="90%">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-9">
+            <input type="email" class="form-control" id="inputEmail3" placeholder="Email" width="90%">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="dob" class="col-sm-2 col-form-label">DOB</label>
+          <div class="col-sm-9">
+            <input type="date" class="form-control" id="dob" placeholder="Date of Birtth (MM/DD/YYYY)" width="90%">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="passwordCheck" class="col-sm-2 col-form-label">Re-Enter Password</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="passwordCheck" placeholder="Re-Enter Password">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+          </div>
+        </div>
+      </form>
+  </div>
+</div>
 
 {% endblock %}

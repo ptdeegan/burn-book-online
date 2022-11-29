@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+
+
 from flask import Flask, request, render_template
 import random 
 import os
@@ -21,3 +23,11 @@ def profile():
 @app.get('/signup')
 def signup():
     return render_template('signup.html')
+
+@app.get('/login')
+def login():
+    return render_template('login.html')
+
+@app.get('/viewpost')
+def viewpost():
+    return render_template('viewpost.html')

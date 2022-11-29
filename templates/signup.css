@@ -1,0 +1,23 @@
+h1{
+    margin:20px;
+    font-weight:bold;
+  }
+  section{
+    padding:30px 0;
+    position:relative;
+    margin-bottom:80px;
+    overflow:hidden;
+  }
+  div.img-wrapper{
+    background-image: url("../static/signup.jpeg");
+      min-height: 100%;
+      background-position: center;
+      background-size: cover;
+      position: absolute;
+  /*   change the left side image width as like you want */
+      width: 41.66667%;
+      left: 0;
+  }
+  p{
+    padding: 20px;
+  }

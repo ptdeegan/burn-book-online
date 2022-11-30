@@ -5,7 +5,7 @@
 from flask import Flask, request, render_template
 import random 
 import os
-
+from dotenv import load_dotenv
 app = Flask(__name__)
 pfp_num= random.randrange(0,9)
 

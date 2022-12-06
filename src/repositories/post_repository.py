@@ -1,1 +1,1 @@
-from src.models import 
+from src.models import Posts, db

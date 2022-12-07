@@ -42,14 +42,19 @@ def makeProfile():
     print(username, password, dob, email, first_name, last_name)
 
     existing_user = Users.query.filter_by(username=username).first()
+    existing_email = Users.query.filter_by(email=email).first()
+
     if existing_user:
-        return redirect('/')
+        return redirect('/signup')
+
+    if existing_email:
+        return redirect('/signup')
 
     hashed_bytes = bcrypt.generate_password_hash(password, int(os.getenv('BCRYPT_ROUNDS')))
     hashed_password = hashed_bytes.decode('utf-8')
     new_user = Users(username=username, first_name=first_name, last_name=last_name, email=email, dob=dob, password=hashed_password)
 
-    db.session.add(new_user) #TODO: DOES NOT POST TO SQL, REMEMBER TO FIX
+    db.session.add(new_user) #TODO: unique username unique email message alert, passwords match, redirect message, add pfp
     db.session.commit()
 
     session['user'] = {

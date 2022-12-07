@@ -12,17 +12,19 @@ class Users(db.Model):
     email = db.Column(db.String, nullable = False)
     date_of_birth = db.Column(db.Date, nullable = False)
     admin_status = db.Column(db.Boolean, nullable = False)
+    password = db.Column(db.String, nullable = False)
 
     def __repr__(self) -> str:
         return f'Users(user_id={self.user_id}, first_name={self.first_name}, last_name={self.last_name}, email={self.email}'
 
-    def __init__(self, username: str, first_name: str, last_name: str, email: str, dob: date ):
+    def __init__(self, username: str, first_name: str, last_name: str, email: str, dob: date, password: str ):
         self.username = username
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.date_of_birth = dob
         self.admin_status = False
+        self.password = password
 
 class Posts(db.Model):
     __tablename__ = 'posts'

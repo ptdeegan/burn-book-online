@@ -2,13 +2,14 @@
 
 
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 from src.repositories.post_repository import posts_repository_singlton
 import random 
 import os
 from dotenv import load_dotenv
 from models import db
+
 db.init_app(app)
 app = Flask(__name__)
 pfp_num= random.randrange(0,9)
@@ -32,6 +33,12 @@ def signup():
     password = request.form.get('password')
     dob = request.form.get('dob')
     email = request.form.get('email')
+    
+    existing_user = Users.query.filter_by(username=username).first()
+    if existing_user:
+        return redirect('/')
+
+    new_user = Users(username, password, dob, email)
 
 @app.get('/signup')
 def signup():

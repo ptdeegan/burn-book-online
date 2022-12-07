@@ -3,6 +3,7 @@
 
 
 from flask import Flask, request, render_template
+from src.repositories.post_repository import posts_repository_singlton
 import random 
 import os
 from dotenv import load_dotenv
@@ -14,7 +15,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 
 @app.get('/')
 def home():
-    return render_template('index.html')
+    all_posts = posts_repository_singlton.get_all_posts()
+    return render_template('index.html', posts = all_posts)
 
 @app.get('/profile')
 def profile():

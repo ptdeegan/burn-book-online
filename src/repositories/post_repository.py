@@ -11,5 +11,11 @@ class Post_Repository:
         found_post : Posts = Posts.query.get_or_404(post_id)
         return found_post
 
+    def create_post(self, user_id: int, title: str, body: str) -> Posts:
+        new_post = Posts(user_id, title, body)
+        db.session.add(new_post)
+        db.session.commit()
+        return new_post
+
 #Singlton for other module use
 posts_repository_singlton = Post_Repository()

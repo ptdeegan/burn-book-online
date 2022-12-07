@@ -2,7 +2,7 @@
 
 
 
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from src.repositories.post_repository import posts_repository_singlton
@@ -39,16 +39,24 @@ def makeProfile():
     first_name = request.form.get('firstname')
     last_name = request.form.get('lastname')
     
+    print(username, password, dob, email, first_name, last_name)
+
     existing_user = Users.query.filter_by(username=username).first()
     if existing_user:
         return redirect('/')
 
     hashed_bytes = bcrypt.generate_password_hash(password, int(os.getenv('BCRYPT_ROUNDS')))
     hashed_password = hashed_bytes.decode('utf-8')
-    new_user = Users(username, first_name, last_name, email, dob, hashed_password)
+    new_user = Users(username=username, first_name=first_name, last_name=last_name, email=email, dob=dob, password=hashed_password)
 
     db.session.add(new_user) #TODO: DOES NOT POST TO SQL, REMEMBER TO FIX
     db.session.commit()
+
+    session['user'] = {
+            'email': new_user.email,
+            'username': new_user.username,
+            'user_id': new_user.user_id,
+        }
 
     return redirect('/')
 

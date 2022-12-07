@@ -8,10 +8,10 @@ from src.repositories.post_repository import posts_repository_singlton
 import random 
 import os
 from dotenv import load_dotenv
-from models import db
+from src.models import db, Users
 
-db.init_app(app)
 app = Flask(__name__)
+db.init_app(app)
 pfp_num= random.randrange(0,9)
 
 load_dotenv()

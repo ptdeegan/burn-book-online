@@ -57,11 +57,11 @@ def makeProfile():
     db.session.add(new_user) #TODO: unique username unique email message alert, passwords match, redirect message, add pfp
     db.session.commit()
 
-    session['user'] = {
-            'email': new_user.email,
-            'username': new_user.username,
-            'user_id': new_user.user_id,
-        }
+    # session['user'] = {
+    #         'email': new_user.email,
+    #         'username': new_user.username,
+    #         'user_id': new_user.user_id,
+    #     }
 
     return redirect('/')
 
@@ -75,6 +75,15 @@ def signup():
 def letLogin():
     username = request.form.get('username')
     password = request.form.get('password')
+
+    user = Users.query.filter_by(username=username).first()
+    if not user:
+        return redirect('/')
+    
+    if not bcrypt.check_password_hash(user.password, password):
+        return redirect('/')
+    
+    return redirect('/profile')
 
 @app.get('/login')
 def login():

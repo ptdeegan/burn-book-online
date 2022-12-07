@@ -3,11 +3,8 @@ from datetime import date
 
 db = SQLAlchemy()
 
-
-
-
-
 class Users(db.Model):
+    __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key = True)
     first_name = db.Column(db.String(255), nullable = False)
     last_name = db.Column(db.String(255), nullable = False)

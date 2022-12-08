@@ -13,6 +13,7 @@ class Users(db.Model):
     date_of_birth = db.Column(db.Date, nullable = False)
     admin_status = db.Column(db.Boolean, nullable = False)
     password = db.Column(db.String, nullable = False)
+    posts = db.relationship('Posts', backref = db.backref('users', lazy = True))
 
     def __repr__(self) -> str:
         return f'Users(user_id={self.user_id}, first_name={self.first_name}, last_name={self.last_name}, email={self.email}'

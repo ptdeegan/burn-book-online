@@ -5,6 +5,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>User</th>
             <th>Title</th>
             <th>Post Body</th>
         </tr>
@@ -12,6 +13,7 @@
     <tbody>
         {% for post in posts %}
         <tr>
+            <td>{{ post.users.username }}</td>
             <td>{{ post.post_title }}</td>
             <td>{{ post.post_body }}</td>
         </tr>

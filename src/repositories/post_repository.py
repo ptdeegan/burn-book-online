@@ -34,7 +34,8 @@ class Post_Repository:
             new_interaction = User_likes(burn_status, user_id, post_id)
             db.session.add(new_interaction)
             db.session.commit()
-            return new_interaction           
+            return new_interaction
+           
         elif (old_interaction is None):
             #base code that adds new interaction
             new_interaction = User_likes(burn_status, user_id, post_id)

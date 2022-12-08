@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 from src.models import *
 
 app = Flask(__name__)
-db.init_app(app)
 pfp_num= random.randrange(0,9)
 
 load_dotenv()
@@ -24,8 +23,8 @@ bcrypt = Bcrypt(app)
 
 @app.get('/')
 def home():
-    #all_posts = posts_repository_singlton.get_all_posts()
-    return render_template('index.html')
+    all_posts = posts_repository_singlton.get_all_posts()
+    return render_template('index.html', posts = all_posts)
 
 @app.get('/profile')
 def profile():

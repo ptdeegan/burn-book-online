@@ -1,4 +1,4 @@
-from src.models import Posts, db
+from src.models import Posts, User_likes, db
 
 class Post_Repository:
     #gets all posts
@@ -8,7 +8,7 @@ class Post_Repository:
 
     #gets single post based on ID
     def get_post_by_id(self, post_id: int) -> Posts:
-        found_post : Posts = Posts.query.get_or_404(post_id)
+        found_post: Posts = Posts.query.get_or_404(post_id)
         return found_post
 
     #create posts
@@ -18,7 +18,42 @@ class Post_Repository:
         db.session.commit()
         return new_post
 
+    #Add post interaction (like or dislike)
+    def like_post(self, user_id: int, post_id: int, burn_status: bool) -> User_likes:
+        old_interaction: User_likes = User_likes.query.filter(User_likes.user_id == user_id and User_likes.post_id == post_id)
 
+        if (old_interaction.is_burn == burn_status):
+            #If old interaction is the same as new we will remove the old interaction and return null
+            db.session.delete(old_interaction)
+            db.session.commit()
+            return None
+        elif (old_interaction.is_burn != burn_status):
+            #If old interaction is not the same as new we will remove old and add new
+            db.session.delete(old_interaction)
+            db.session.commit()
+            new_interaction = User_likes(burn_status, user_id, post_id)
+            db.session.add(new_interaction)
+            db.session.commit()
+            return new_interaction           
+        elif (old_interaction is None):
+            #base code that adds new interaction
+            new_interaction = User_likes(burn_status, user_id, post_id)
+            db.session.add(new_interaction)
+            db.session.commit()
+            return new_interaction     
+
+    #Sum post interaction and return total
+    def get_likes(self, post_id: int) -> int:
+        all_interaction: list[User_likes] = User_likes.query.filter(User_likes.post_id == post_id).all()
+        like_total = 0
+
+        for interaction in all_interaction:
+            if interaction.is_burn == True:
+                like_total += 1
+            else:
+                like_total -= 1
+
+        return like_total
 
 #Singlton for other module use
 posts_repository_singlton = Post_Repository()

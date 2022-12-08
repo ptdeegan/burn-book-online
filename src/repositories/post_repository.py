@@ -3,8 +3,9 @@ from src.models import Posts, db
 class Post_Repository:
     #gets all posts
     def get_all_posts(self) -> list[Posts]:
-        all_posts = list[Posts] = Posts.query.all()
-        return all_posts
+        #all_posts = list[Posts] = Posts.query.all()
+        #return all_posts
+        pass
 
     #gets single post based on ID
     def get_post_by_id(self, post_id: int) -> Posts:

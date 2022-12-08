@@ -3,6 +3,7 @@
 
 
 from flask import Flask, request, render_template, redirect, session
+from flask_session import Session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from src.repositories.post_repository import posts_repository_singlton
@@ -19,11 +20,14 @@ load_dotenv()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 db.init_app(app)
-
 bcrypt = Bcrypt(app)
+Session(app)
 
 @app.get('/')
 def home():
+    if not session.get('user'):
+        return redirect('/login')
+    
     #all_posts = posts_repository_singlton.get_all_posts()
     return render_template('index.html')
 
@@ -58,11 +62,7 @@ def makeProfile():
     db.session.add(new_user) #TODO: unique username unique email message alert, passwords match, redirect message, add pfp
     db.session.commit()
 
-    # session['user'] = {
-    #         'email': new_user.email,
-    #         'username': new_user.username,
-    #         'user_id': new_user.user_id,
-    #     }
+    session['user'] = username
 
     return redirect('/')
 

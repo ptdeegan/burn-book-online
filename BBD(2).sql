@@ -5,7 +5,8 @@ CREATE TABLE "users" (
   "last_name" varchar NOT NULL,
   "email" varchar UNIQUE NOT NULL,
   "date_of_birth" date NOT NULL,
-  "admin_status" boolean NOT NULL
+  "admin_status" boolean NOT NULL,
+  "password" varchar NOT NULL
 );
 
 CREATE TABLE "posts" (

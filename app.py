@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-
-
-
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, request, render_template, redirect, session, flash, url_for
 from flask_session import Session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
@@ -18,9 +15,12 @@ pfp_num= random.randrange(0,9)
 load_dotenv()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
+app.config['SESSION_TYPE'] = 'memcached'
+app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
-Session(app)
+# Session(app)
+sess = Session()
 
 @app.get('/')
 def home():
@@ -32,6 +32,7 @@ def home():
 
 @app.get('/profile')
 def profile():
+
     return render_template('profile.html', pfp_num=pfp_num)
 
 @app.post('/signup')
@@ -49,9 +50,11 @@ def makeProfile():
     existing_email = Users.query.filter_by(email=email).first()
 
     if existing_user:
+        flash("This username is already being used. Please try a new username.")
         return redirect('/signup')
 
     if existing_email:
+        flash("This email is already in use. Please use a new email.")
         return redirect('/signup')
 
     hashed_bytes = bcrypt.generate_password_hash(password, int(os.getenv('BCRYPT_ROUNDS')))
@@ -61,9 +64,7 @@ def makeProfile():
     db.session.add(new_user) #TODO: unique username unique email message alert, passwords match, redirect message, add pfp
     db.session.commit()
 
-    session['user'] = username
-
-    return redirect('/')
+    return redirect('/profile')
 
 
 
@@ -77,12 +78,20 @@ def letLogin():
     password = request.form.get('password')
 
     user = Users.query.filter_by(username=username).first()
+
     if not user:
-        return redirect('/')
+        flash("Incorrect username. Please retry login.")
+        return redirect('/login')
     
     if not bcrypt.check_password_hash(user.password, password):
-        return redirect('/')
+        flash("Incorrect password. Please retry login.")
+        return redirect('/login')
     
+    session['user'] = {
+    'email': user.email,
+    'username' : user.username,
+    'user_id': user.user_id,
+}
     return redirect('/profile')
 
 @app.get('/login')

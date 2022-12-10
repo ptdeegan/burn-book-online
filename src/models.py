@@ -13,6 +13,7 @@ class Users(db.Model):
     date_of_birth = db.Column(db.Date, nullable = False)
     admin_status = db.Column(db.Boolean, nullable = False)
     password = db.Column(db.String, nullable = False)
+    posts = db.relationship('Posts', backref = db.backref('users', lazy = True))
 
     def __repr__(self) -> str:
         return f'Users(user_id={self.user_id}, first_name={self.first_name}, last_name={self.last_name}, email={self.email}'
@@ -42,14 +43,14 @@ class Posts(db.Model):
 
 class User_likes(db.Model):
     __tablename__ = 'user_likes'
-    like_id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable = False)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), nullable = False)
+    is_burn = db.Column(db.Boolean, primary_key = True)
 
-    def __init__(self, like_id: int, user_id: int, post_id: int):
-        self.like_id = like_id
+    def __init__(self, burn: bool, user_id: int, post_id: int):
         self.user_id = user_id
         self.post_id = post_id
+        self.is_burn= burn
 
 class Comments(db.Model):
     __tablename__ = 'comments'

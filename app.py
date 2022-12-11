@@ -24,8 +24,8 @@ sess = Session()
 
 @app.get('/')
 def home():
-    #if not session.get('user'):
-        #return redirect('/login')
+    if not session.get('user'):
+        return redirect('/login')
     
     all_posts = posts_repository_singlton.get_all_posts()
     return render_template('index.html', posts = all_posts)

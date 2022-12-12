@@ -110,3 +110,12 @@ def login():
 @app.get('/viewpost')
 def viewpost():
     return render_template('viewpost.html')
+
+@app.get('/posts/new')
+def create_posts_form():
+    return render_template('create_posts_form.html')
+
+@app.post('/posts')
+def create_post():
+    title = request.form.get('title', '')
+    body = request.form.get('body', '')

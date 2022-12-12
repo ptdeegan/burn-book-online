@@ -101,8 +101,26 @@
       <h1>Burn Post Title Filler</h1>
       <h6>Poster's username</h6>
       <p style="border-width:1px; border-style:solid;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione perferendis id sit culpa ea aspernatur omnis tenetur magnam, ad molestias aut veniam, eius fugit vel! Aliquid culpa numquam nulla veritatis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!</p>
+    
+      <h3>Comments</h3>
       
+      <form action="/comment" method="POST">
+        <label for="comment">Spill some Tea:</label><br>
+        <textarea id="comment" name="comment"></textarea><br>
+        <input type="submit" value="Submit">
+      </form>
+      
+      <table>
+        <tbody>
+          {% for comment in comments %}
+          <tr>
+              <td>{{ comments.users.username }}</td>
+              <td>{{ comments.comment_body }}</td>
+          </tr>
+          {% endfor %}
+      </table>
     </div>
+  
 
     <div class="divright">
       <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!</p>

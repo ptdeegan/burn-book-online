@@ -18,31 +18,6 @@ class Post_Repository:
         db.session.commit()
         return new_post
 
-    #Add post interaction (like or dislike)
-    def like_post(self, user_id: int, post_id: int, burn_status: bool) -> User_likes:
-        old_interaction: User_likes = User_likes.query.filter(User_likes.user_id == user_id and User_likes.post_id == post_id)
-
-        if (old_interaction.is_burn == burn_status):
-            #If old interaction is the same as new we will remove the old interaction and return null
-            db.session.delete(old_interaction)
-            db.session.commit()
-            return None
-        elif (old_interaction.is_burn != burn_status):
-            #If old interaction is not the same as new we will remove old and add new
-            db.session.delete(old_interaction)
-            db.session.commit()
-            new_interaction = User_likes(burn_status, user_id, post_id)
-            db.session.add(new_interaction)
-            db.session.commit()
-            return new_interaction
-           
-        elif (old_interaction is None):
-            #base code that adds new interaction
-            new_interaction = User_likes(burn_status, user_id, post_id)
-            db.session.add(new_interaction)
-            db.session.commit()
-            return new_interaction     
-
     #Sum post interaction and return total
     def get_likes(self, post_id: int) -> int:
         all_interaction: list[User_likes] = User_likes.query.filter(User_likes.post_id == post_id).all()
@@ -55,6 +30,43 @@ class Post_Repository:
                 like_total -= 1
 
         return like_total
+
+    def burn_post_check(self, post_id: int):
+        #Need to test code still
+        i = self.get_likes(post_id)
+        if (i > 3):
+            modPost = self.get_post_by_id(post_id)
+            modPost.post_body = "Burned!"
+            db.session.commit()
+
+    #Add post interaction (like or dislike)
+    def like_post(self, user_id: int, post_id: int, burn_status: bool) -> User_likes:
+        old_interaction: User_likes = User_likes.query.get(User_likes.user_id == user_id and User_likes.post_id == post_id)
+
+        if (old_interaction.is_burn == burn_status):
+            #If old interaction is the same as new we will remove the old interaction and return null
+            db.session.delete(old_interaction)
+            db.session.commit()
+            self.burn_post_check(post_id)
+            return None
+        elif (old_interaction.is_burn != burn_status):
+            #If old interaction is not the same as new we will remove old and add new
+            db.session.delete(old_interaction)
+            db.session.commit()
+            new_interaction = User_likes(burn_status, user_id, post_id)
+            db.session.add(new_interaction)
+            db.session.commit()
+            self.burn_post_check(post_id)
+            return new_interaction
+           
+        elif (old_interaction is None):
+            #base code that adds new interaction
+            new_interaction = User_likes(burn_status, user_id, post_id)
+            db.session.add(new_interaction)
+            db.session.commit()
+            self.burn_post_check(post_id)
+            return new_interaction     
+
 
 #Singlton for other module use
 posts_repository_singlton = Post_Repository()

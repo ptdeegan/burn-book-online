@@ -21,17 +21,18 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/profile" style="color: #8a8a8a;">Profile</a>
-          </ul>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/signup" style="color: #8a8a8a;">Sign-up</a>
-          </ul>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/login" style="color: #8a8a8a;">Login</a>
+            </li>
           </ul>
         </div>
-        <button type="button" class="btn btn-light" href="/posts/new">Create Post</button>
+        <a href="/posts/new">
+          <button type="button" class="btn btn-light">Create Post</button>
+        </a>
       </div>
     </nav>  
     {% block body %}{% endblock %}

@@ -129,4 +129,4 @@ def create_post():
     uid = session['user']['user_id']
 
     posts_repository_singlton.create_post(uid, title, body)
-    return redirect('index.html')
+    return redirect('/')

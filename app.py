@@ -126,3 +126,7 @@ def create_posts_form():
 def create_post():
     title = request.form.get('title', '')
     body = request.form.get('body', '')
+    uid = session['user']['user_id']
+
+    posts_repository_singlton.create_post(uid, title, body)
+    return redirect('index.html')

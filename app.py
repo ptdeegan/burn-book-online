@@ -118,7 +118,6 @@ def signout():
     del session['user']
     return redirect('/login')
 
-
 @app.get('/posts/new')
 def create_posts_form():
     return render_template('create_posts_form.html')

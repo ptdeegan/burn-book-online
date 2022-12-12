@@ -55,55 +55,18 @@
 <body>
     <div class="profile-container">
         <div class="profile-image">
-                {% block body %}
             <h1>Profile Page</h1>
 
-                {%if pfp_num==1%}
-
-                <img src="{{url_for('static', filename='cadyphone_pfp.jpg')}}" align="middle" width="100" height="100">
-
-                {%elif pfp_num==2%}
-
-                <img src="{{url_for('static', filename='damian_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-                {%elif pfp_num==3%}
-
-                <img src="{{url_for('static', filename='gretchen_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-                {%elif pfp_num==4%}
-
-                <img src="{{url_for('static', filename='janis_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-                {%elif pfp_num==5%}
-
-                <img src="{{url_for('static', filename='karen_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-                {%elif pfp_num==6%}
-
-                <img src="{{url_for('static', filename='karenphone_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-                {%elif pfp_num==7%}
-
-                <img src="{{url_for('static', filename='profile_pic.jpg')}}" align="middle" width="100" height="100">
-
-                {%elif pfp_num==8%}
-
-                <img src="{{url_for('static', filename='regina_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-                {%elif pfp_num==9%}
-
-                <img src="{{url_for('static', filename='reginabunny_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-                {% endif %}
+                <img src="static/pfp_{{pfp_num}}" align="middle" width="100" height="100"> 
             
         </div>
-        <h1 class="profile-name">form.request</h1>
+        <h1 class="profile-name">{{user_page_info.username}}</h1>
         <p class="profile-bio">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam euismod diam vel nisl malesuada, quis iaculis purus luctus.
+            This is a profile bio, don't know if we want to keep this yet or not
         </p>
         <ul class="profile-details">
             <li>
-                <strong>Name:</strong> 35
+                <strong>Name:</strong> Leydabae
             </li>
             <li>
                 <strong>Location:</strong> New York, NY
@@ -116,6 +79,3 @@
 </body>
 </html>
 
-
-
-{% endblock %}

@@ -32,7 +32,6 @@ def home():
 
 @app.get('/profile')
 def profile():
-
     return render_template('profile.html', pfp_num=pfp_num)
 
 @app.post('/signup')

@@ -27,6 +27,9 @@ class Users(db.Model):
         self.admin_status = False
         self.password = password
 
+    def get_pfpnum(self) -> int:
+        return (self.user_id % 10)
+
 class Posts(db.Model):
     __tablename__ = 'posts'
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable = False)

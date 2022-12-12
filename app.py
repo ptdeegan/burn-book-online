@@ -23,19 +23,20 @@ bcrypt = Bcrypt(app)
 def home():
     if not session["user"]:
         return redirect('/login')
-    
     all_posts = posts_repository_singlton.get_all_posts()
-    return render_template('index.html', posts = all_posts)
+    current_user_info = Users.query.get(session['user']['user_id'])
+    pfp_num = session['user']['user_id'] % 10
+    return render_template('index.html', posts = all_posts, current_user_info=current_user_info, pfp_num=pfp_num)
 
 @app.get('/profile/<user_id>')
 def profile(user_id):
     same_user = False
     if user_id == session["user"]["user_id"]:
         same_user = True
-
-    user_info = Users.query.get(user_id)
-
-    return render_template('profile.html', pfp_num=pfp_num, user_info = user_info, same_user = same_user)
+    user_page_info = Users.query.get(user_id)
+    current_user_info = Users.query.get(session['user']['user_id'])
+    pfp_num = session['user']['user_id'] % 10
+    return render_template('profile.html', pfp_num=pfp_num, user_page_info = user_page_info, current_user_info=current_user_info, same_user = same_user)
 
 @app.post('/signup')
 def makeProfile():
@@ -63,8 +64,14 @@ def makeProfile():
     hashed_password = hashed_bytes.decode('utf-8')
     new_user = Users(username=username, first_name=first_name, last_name=last_name, email=email, dob=dob, password=hashed_password)
 
-    db.session.add(new_user) #TODO: unique username unique email message alert, passwords match, redirect message, add pfp
+    db.session.add(new_user)
     db.session.commit()
+
+    session['user'] = {
+    'email': new_user.email,
+    'username' : new_user.username,
+    'user_id': new_user.user_id,
+    }
 
     return redirect('/profile')
 

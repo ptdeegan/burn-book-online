@@ -120,3 +120,16 @@ def signout():
         return abort(403)
     del session['user']
     return redirect('/login')
+
+@app.get('/posts/new')
+def create_posts_form():
+    return render_template('create_posts_form.html')
+
+@app.post('/posts')
+def create_post():
+    title = request.form.get('title', '')
+    body = request.form.get('body', '')
+    uid = session['user']['user_id']
+
+    posts_repository_singlton.create_post(uid, title, body)
+    return redirect('/')

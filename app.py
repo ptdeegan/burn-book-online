@@ -20,7 +20,6 @@ app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
 # Session(app)
-sess = Session()
 
 @app.get('/')
 def home():

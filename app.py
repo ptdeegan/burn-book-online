@@ -73,7 +73,9 @@ def makeProfile():
     'user_id': new_user.user_id,
     }
 
-    return redirect('/profile')
+    uid = new_user.user_id
+
+    return redirect(f'/profile/{uid}')
 
 
 
@@ -101,7 +103,8 @@ def letLogin():
     'username' : user.username,
     'user_id': user.user_id,
     }
-    return redirect('/profile')
+    uid = session['user']['user_id']
+    return redirect(f'/profile/{uid}')
 
 @app.get('/login')
 def login():

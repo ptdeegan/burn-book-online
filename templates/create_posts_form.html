@@ -2,15 +2,17 @@
 
 {% block body %}
 <h1 class="mb-5">Create Movie Rating</h1>
-<form action="/posts" method="post">
-    <div class="mb-3">
-        <label for="title" class="form-label">Post Title</label>
-        <input type="text" name="title" id="title" class="form-control" autocomplete="off" required>
-    </div>
-    <div class="mb-3">
-        <label for="body" class="form-label">Post Body</label>
-        <input type="text" name="body" id="body" class="form-control" autocomplete="off" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Create Post!</button>
-</form>
+<div class="mb-3">
+    <form action="/posts" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">Post Title</label>
+            <input type="text" name="title" id="title" class="form-control" autocomplete="off" required>
+        </div>
+        <div class="mb-3">
+            <label for="body" class="form-label">Post Body</label>
+            <input type="text" name="body" id="body" class="form-control" autocomplete="off" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Post!</button>
+    </form>
+</div>
 {% endblock %}

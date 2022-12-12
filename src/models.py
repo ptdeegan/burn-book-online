@@ -15,6 +15,8 @@ class Users(db.Model):
     password = db.Column(db.String, nullable = False)
     posts = db.relationship('Posts', backref = db.backref('users', lazy = True))
 
+#{{user_info.username}}
+
     def __repr__(self) -> str:
         return f'Users(user_id={self.user_id}, first_name={self.first_name}, last_name={self.last_name}, email={self.email}'
 

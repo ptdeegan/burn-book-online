@@ -41,7 +41,7 @@ class Post_Repository:
 
     #Add post interaction (like or dislike)
     def like_post(self, user_id: int, post_id: int, burn_status: bool) -> User_likes:
-        old_interaction: User_likes = User_likes.query.filter(User_likes.user_id == user_id and User_likes.post_id == post_id)
+        old_interaction: User_likes = User_likes.query.get(User_likes.user_id == user_id and User_likes.post_id == post_id)
 
         if (old_interaction.is_burn == burn_status):
             #If old interaction is the same as new we will remove the old interaction and return null

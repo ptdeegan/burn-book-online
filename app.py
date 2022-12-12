@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from flask import Flask, request, render_template, redirect, session, flash, url_for
-from flask_session import Session
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from src.repositories.post_repository import posts_repository_singlton
@@ -19,21 +18,24 @@ app.config['SESSION_TYPE'] = 'memcached'
 app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
 bcrypt = Bcrypt(app)
-# Session(app)
-sess = Session()
 
 @app.get('/')
 def home():
-    if not session.get('user'):
+    if not session["user"]:
         return redirect('/login')
     
     all_posts = posts_repository_singlton.get_all_posts()
     return render_template('index.html', posts = all_posts)
 
-@app.get('/profile')
-def profile():
+@app.get('/profile/<user_id>')
+def profile(user_id):
+    same_user = False
+    if user_id == session["user"]["user_id"]:
+        same_user = True
 
-    return render_template('profile.html', pfp_num=pfp_num)
+    user_info = Users.query.get(user_id)
+
+    return render_template('profile.html', pfp_num=pfp_num, user_info = user_info, same_user = same_user)
 
 @app.post('/signup')
 def makeProfile():
@@ -91,7 +93,7 @@ def letLogin():
     'email': user.email,
     'username' : user.username,
     'user_id': user.user_id,
-}
+    }
     return redirect('/profile')
 
 @app.get('/login')

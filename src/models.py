@@ -14,6 +14,8 @@ class Users(db.Model):
     admin_status = db.Column(db.Boolean, nullable = False)
     password = db.Column(db.String, nullable = False)
 
+#{{user_info.username}}
+
     def __repr__(self) -> str:
         return f'Users(user_id={self.user_id}, first_name={self.first_name}, last_name={self.last_name}, email={self.email}'
 

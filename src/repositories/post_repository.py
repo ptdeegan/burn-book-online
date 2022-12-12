@@ -67,6 +67,10 @@ class Post_Repository:
             self.burn_post_check(post_id)
             return new_interaction     
 
+    def delete_post(self, post_id: int):
+        del_post: Posts = Posts.query.get_or_404(post_id)
+        db.session.delete(del_post)
+        db.session.commit()
 
 #Singlton for other module use
 posts_repository_singlton = Post_Repository()

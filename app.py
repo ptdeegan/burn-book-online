@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask, request, render_template, redirect, session, flash, url_for
+from flask import Flask, request, render_template, redirect, session, flash, url_for, abort
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from src.repositories.post_repository import posts_repository_singlton
@@ -21,7 +21,7 @@ bcrypt = Bcrypt(app)
 
 @app.get('/')
 def home():
-    if not session["user"]:
+    if 'user' not in session:
         return redirect('/login')
     all_posts = posts_repository_singlton.get_all_posts()
     current_user_info = Users.query.get(session['user']['user_id'])
@@ -110,6 +110,14 @@ def login():
 @app.get('/viewpost')
 def viewpost():
     return render_template('viewpost.html')
+
+@app.get('/signout')
+def signout():
+    if not session['user']:
+        return abort(403)
+    del session['user']
+    return redirect('/login')
+
 
 @app.get('/posts/new')
 def create_posts_form():

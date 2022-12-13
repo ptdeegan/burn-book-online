@@ -80,33 +80,23 @@
   }
 </style>
 
-current_post = Post_Repository().get
+
 
   <body style="background-color:mistyrose" >
     
-    <div class="sidenav">
-      <label>Menu</label>
-      <form action="/profile">
-        <input type="text" placeholder="Search.." name="search">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      <a href="#about">Sidebar 1</a>
-      <a href="#services">Sidebar 2</a>
-      <a href="#clients">Sidebar 3</a>
-      <a href="#contact">Sidebar 4</a>
-    </div>
-
+  
     
     <div class ="divcenter">
-      <h1>{{Post.post_title}}</h1>
-      <h6>{{Post.users.username</h6>
-      <p style="border-width:1px; border-style:solid;">{{Post.p</p>
+      <h1>{{current_post.post_title}}</h1>
+      <h6>{{current_post.users.username</h6>
+      <p style="border-width:1px; border-style:solid;">{{current_post.post_body}}</p><br>
     
       <h3>Comments</h3>
       
       <form action="/comment" method="POST">
+        <input class="hidden" name="post_id" value={{current_post.post_id}}>
         <label for="comment">Spill some Tea:</label><br>
-        <textarea id="comment" name="comment"></textarea><br>
+        <textarea id="comment" name="comment" placeholder="Comment here"></textarea><br>
         <input type="submit" value="Submit">
       </form>
       

@@ -40,7 +40,9 @@ def profile(user_id):
     current_user_info = Users.query.get(session['user']['user_id'])
     pfp_num = session['user']['user_id'] % 10
     user_posts = Posts.query.filter_by(user_id=user_id).all()
-    return render_template('profile.html', pfp_num=pfp_num, user_page_info = user_page_info, current_user_info=current_user_info, same_user = same_user, user_posts=user_posts)
+    num_likes = posts_repository_singlton.get_likes_for_user(user_id)
+    num_posts = len(posts_repository_singlton.get_post_by_user(user_id))
+    return render_template('profile.html', pfp_num=pfp_num, user_page_info = user_page_info, current_user_info=current_user_info, same_user = same_user, user_posts=user_posts, num_likes=num_likes, num_posts=num_posts)
 
 @app.post('/signup')
 def makeProfile():
@@ -120,11 +122,12 @@ def viewpost(post_id: int):
     post_comments = Comment_repository_singleton.get_comments(post_id)
     user_id = session['user']['user_id']
     current_user_info = Users.query.get(user_id)
+    poster = single_post.users.user_id
     num_burns=posts_repository_singlton.get_likes(post_id=post_id)
     same_user = False
-    if int(user_id) == session["user"]["user_id"]:
+    if int(poster) == session["user"]["user_id"]:
         same_user = True
-    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info, same_user=same_user, num_burns=num_burns)
+    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info, same_user=same_user, num_burns=num_burns, poster=poster)
 
 @app.post('/comment')
 def add_comment():
@@ -160,6 +163,12 @@ def create_post():
 
 @app.post('/deletepost/<post_id>')
 def delete_post(post_id):
+    comments = Comment_repository_singleton.get_comments(post_id)
+    for comment in comments:
+        Comment_repository_singleton.delete_comment(comment.comment_id)
+    likes = like_repository_singleton.get_post_likes(post_id)
+    for like in likes:
+        like_repository_singleton.delete_like(like.like_id)
     posts_repository_singlton.delete_post(post_id)
     return redirect('/')
 
@@ -194,6 +203,66 @@ def delete_profile(profile_id):
 @app.post('/deletecomment/<comment_id>')
 def delete_comment(comment_id):
     post_id = request.form.get('post_id')
+    print(post_id)
     Comment_repository_singleton.delete_comment(comment_id)
+    return redirect(f'/posts/{post_id}')
+
+@app.post('/edit/<post_id>')
+def post_editor(post_id):
+    post = Posts.query.get(post_id)
+    current_user_info = Users.query.get(session['user']['user_id'])
+    return render_template('edit_post.html', post=post, current_user_info=current_user_info)
+
+@app.post('/editpost/<post_id>')
+def edit_post(post_id):
+    post = Posts.query.get(post_id)
+    title = request.form.get('title')
+    body = request.form.get('body')
+    post.post_body = body
+    post.post_title = title
+    db.session.commit()
+    return redirect(f'/posts/{post_id}')
+
+@app.get('/editprofile/<user_id>')
+def profile_editor(user_id):
+    user = Users.query.get(user_id)
+    current_user_info = Users.query.get(session['user']['user_id'])
+    return render_template('edit_profile.html', user=user, current_user_info=current_user_info)
+
+@app.post('/editprofile/<user_id>')
+def edit_profile(user_id):
+    user = Users.query.get(user_id)
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
+    username = request.form.get('username')
+    if Users.query.filter_by(username=username).first():
+        flash('Account already exists with this username, please try again')
+        return redirect(f'/editprofile/{user_id}')
+    email = request.form.get('email')
+    if Users.query.filter_by(email=email).first():
+        flash('Account already exists with this email, please try again')
+        return redirect(f'/editprofile/{user_id}')
+    user.firstname = fname
+    user.lastname = lname
+    user.username = username
+    user.email = email
+    db.session.commit()
+    return redirect(f'/profile/{user_id}')
+
+@app.post('/editcomment/<comment_id>')
+def comment_editor(comment_id):
+    post_id = request.form.get('post_id')
+    comment = Comments.query.get(comment_id)
+    post = Posts.query.get(post_id)
+    current_user_info = Users.query.get(session['user']['user_id'])
+    return render_template('edit_comment.html', comment=comment, current_user_info=current_user_info, post=post)
+
+@app.post('/makeedit/<comment_id>')
+def edit_comment(comment_id):
+    comment = Comments.query.get(comment_id)
+    body = request.form.get('body')
+    post_id = request.form.get('post_id')
+    comment.comment_body = body
+    db.session.commit()
     return redirect(f'/posts/{post_id}')
 

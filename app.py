@@ -151,3 +151,8 @@ def create_post():
 
     posts_repository_singlton.create_post(uid, title, body)
     return redirect('/')
+
+@app.post('/deletepost/<post_id>')
+def delete_post(post_id):
+    posts_repository_singlton.delete_post(post_id)
+    return redirect('/')

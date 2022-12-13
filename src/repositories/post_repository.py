@@ -29,7 +29,6 @@ class Post_Repository:
         i = 0
 
         for inter in interactions:
-            print("sanity check")
             if inter.is_burn == True:
                 i += 1
             else:
@@ -47,10 +46,10 @@ class Post_Repository:
 
     #Add post interaction (like or dislike)
     def like_post(self, user_id: int, post_id: int, burn_status: bool) -> User_likes:
-        old_interactions: list[User_likes] = User_likes.query.filter_by(post_id = post_id).all()
+        old_interactions: list[User_likes] = User_likes.query.filter_by(post_id=post_id).all()
         old_interaction: User_likes = None
         for i in old_interactions:
-            if i.user_id == user_id:
+            if int(i.user_id) == int(user_id):
                 old_interaction = i
 
         if (old_interaction is None):
@@ -59,7 +58,7 @@ class Post_Repository:
             db.session.add(new_interaction)
             db.session.commit()
             self.burn_post_check(post_id)
-            return new_interaction 
+            return new_interaction
 
         if (old_interaction.is_burn == burn_status):
             #If old interaction is the same as new we will remove the old interaction and return null
@@ -67,6 +66,7 @@ class Post_Repository:
             db.session.commit()
             self.burn_post_check(post_id)
             return None
+
         elif (old_interaction.is_burn != burn_status):
             #If old interaction is not the same as new we will remove old and add new
             db.session.delete(old_interaction)

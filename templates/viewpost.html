@@ -5,7 +5,7 @@
 <style>
   .post-container {
         max-width: 800px;
-        height: 300px;
+        max-height: 300px;
         margin: 0 auto;
         background-color: pink;
         border:2px solid rgb(209, 88, 88);
@@ -24,39 +24,66 @@
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     }
 
-    .burn-button {
+  .burn-button {
   bottom: 0;
   right: 0;
-}
+  }
+
+.postview {
+        font-family: sans-serif;
+        background-image: url("../static/deskbook.jpg");
+    }
+
+    .post-container {
+        margin: 0 auto;
+        background: white;
+        border:2px solid red;
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    .allpostcont {
+        max-width: 700px;
+        margin: 0 auto;
+        background-color: #F2F2F2; 
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
 </style>
 
-  <body style="background-color:mistyrose" >
-    
-  
-    <br>
-    <br>
+<body class="postview">
+<div class="allpostcont">
+
     <div class ="post-container">
       <h1>{{current_post.post_title}}</h1>
-      <h6>{{current_post.users.username}}</h6>
-      <p style="border-width:1px; border-style:solid;">{{current_post.post_body}}</p></br>
-      <button class="burn-button" id="button">Burn</button>
+      <h6><a href="/profile/{{current_post.users.user_id}}" class="badge badge-light">@{{current_post.users.username}}</a></h6>
+      {{current_post.post_body}}</br><br>
+
+      <button>
+        <img src="{{url_for('static', filename='burning.jpg')}}" alt="Button Image">
+      </button>
+      
       <button class="burn-button" id="button">Douse</button>
     </div>
     <br>
     <div class ="comment-container">
-      <h3>Comments</h3>
       
       <form action="/comment" method="POST">
         <input type="hidden" name="post_id" value={{current_post.post_id}}>
-        <label for="comment">Spill some Tea:</label><br>
-        <textarea id="comment" name="comment" placeholder="Comment here"></textarea><br>
-        <input type="submit" value="Submit">
+        <h3><label for="comment">Spill some tea...</label></h3>
+        <textarea id="comment" name="comment" placeholder="Comment here" style="width:500px; height:50px; border-radius: 10px;" required></textarea><br>
+        <input type="submit" value="Submit" class="btn-danger" style="border-radius:10px">
       </form>
+
+      
+        <img src="{{url_for('static', filename='burning.jpg')}}" alt="Button Image">
+            
     </br>
       {% for comment in comments|reverse %}
 
       <div class="shadow p-3 mb-5" style="background-color:white; border-radius: 10px;">
-      <strong>@{{ comment.users.username }}</strong>
+      <strong><a href="/profile/{{comment.users.user_id}}" class="badge badge-light">@{{ comment.users.username }}</a></strong>
       </br>{{ comment.comment_body }}
       </div>
 
@@ -69,6 +96,8 @@
       <a href="#">BBO INSTA</a>
       <a href="#contact">BBO Twitter</a>
     </div> 
-  </body>
+  </div>
+
+</body>
 {% endblock %}
 

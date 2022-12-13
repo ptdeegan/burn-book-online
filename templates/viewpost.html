@@ -95,13 +95,28 @@
 
       <div class="shadow p-3 mb-5" style="background-color:white; border-radius: 10px;">
       <strong><a href="/profile/{{comment.users.user_id}}" class="badge badge-light">@{{ comment.users.username }}</a></strong>
-      </br>{{ comment.comment_body }}
+      </br>{{ comment.comment_body }}<br>
 
-      {% if current_user_info.admin_status or same_user %}
+      {% if current_user_info.admin_status or comment.users.user_id == current_user_info.user_id %}
+      <table>
+        <tr>
+          <th>
+            <p style="color: white;">..................................................................</p>
+          </th>
+          <th>
+            <form action="/editcomment/{{comment.comment_id}}" method="POST">
+                <input type="hidden" name="post_id" value={{current_post.post_id}}>
+                <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Edit comment</button>
+            </form>
+          </th>
+          <th>
             <form action="/deletecomment/{{comment.comment_id}}" method="POST">
                 <input type="hidden" name="post_id" value={{current_post.post_id}}>
                 <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Delete comment</button>
             </form>
+          </th>
+          </tr>
+          </table>
       {% endif %}
 
       </div>

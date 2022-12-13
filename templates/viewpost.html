@@ -38,9 +38,22 @@
     <div class ="post-container">
       <h1>{{current_post.post_title}}</h1>
       <h6>{{current_post.users.username}}</h6>
+      <h5>{{num_burns}}</h5>
       <p style="border-width:1px; border-style:solid;">{{current_post.post_body}}</p></br>
-      <button class="burn-button" id="button">Burn</button>
-      <button class="burn-button" id="button">Douse</button>
+      <form action="/burnpost/{{current_post.post_id}}" method="POST">
+        <input type="hidden" name="post_id" value={{current_post.post_id}}>
+        <input type="hidden" name="user_id" value={{current_post.users.user_id}}>
+        <button class="burn-button" id="button">Burn</button>
+      </form>
+      
+      <form action="/dousepost/{{current_post.post_id}}" method="POST">
+        <input type="hidden" name="post_id" value={{current_post.post_id}}>
+        <input type="hidden" name="user_id" value={{current_post.users.user_id}}>
+        <button class="burn-button" id="button">Douse</button>
+      </form>
+
+
+      
     </div>
     <br>
     <div class ="comment-container">

@@ -7,8 +7,8 @@
         background-image: url("../static/deskbook.jpg");
     }
     .profile-container {
-        max-width: 600px;
-        height: 300px;
+        max-width: 500px;
+        height: 343px;
         margin: 0 auto;
         background-color: pink;
         border:2px solid red;
@@ -63,23 +63,25 @@
         font-weight: 600;
     }
 </style>
-<h1 style = "color:white;" align ="middle">@{{user_page_info.username}}'s Burn Book</h1>
-
+</br>
+</br>
         <div class="profile-container"align ="middle">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
             <div class="profile-image">
                 <img src="../static/pfp_{{pfp_num}}.jpg" align="middle" width="100" height="100"> 
             </div>
-            <h1 class="profile-name">{{user_page_info.username}}</h1>
-            <ul class="profile-details" text-align: "center">
-                <li>
-                    <strong>Number of Posts: </strong>  3
-                </li>
-            </ul>
-        </div>
+
+            <h1 class="profile-name">@{{user_page_info.username}}'s Burnbook</h1>
+        </br>
+                    <strong>Number of Burns: </strong> </br>50</br>
+   
+                    <strong>Number of Posts: </strong> </br>50
     </br>
 </br>
-        {% for post in user_posts %}
+
+<h2 align="middle">{{user_page_info.username}}'s Posts</h2></br>
+
+        {% for post in user_posts | reverse%}
 
         <div class="shadow p-3 mb-5 bg-body rounded col-sm-10 post-container">
             <!--<h2 href="/posts/{{post.post_id}}">{{ post.post_title }}</h2>-->

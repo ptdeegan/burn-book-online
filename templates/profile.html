@@ -8,13 +8,23 @@
     }
     .profile-container {
         max-width: 600px;
-        height: 400px;
+        height: 300px;
         margin: 0 auto;
         background-color: pink;
         border:2px solid red;
+        border-radius: 40px;
         padding: 20px;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     }
+
+    .post-container {
+        margin: 0 auto;
+        border:2px solid red;
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+    
     .profile-image {
         text-align: center;
         margin-bottom: 30px;
@@ -67,26 +77,18 @@
                 </li>
             </ul>
         </div>
-        <div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Title</th>
-                        <th>Post Body</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for post in user_posts %}
-                    <tr>
-                        <td>{{ post.users.username }}</td>
-                        <td>{{ post.post_title }}</td>
-                        <td>{{ post.post_body }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    </br>
+</br>
+        {% for post in user_posts %}
+
+        <div class="shadow p-3 mb-5 bg-body rounded col-sm-10 post-container">
+            <h2 href="/posts/{{post.post_id}}">{{ post.post_title }}</h2>
+            <small>@{{ post.users.username }}</small><br/>
+            {{ post.post_body }}<br/>
+        
         </div>
+        
+        {% endfor %}
     </body>
     </html>
 {% endblock %}

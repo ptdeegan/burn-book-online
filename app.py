@@ -116,9 +116,11 @@ def login():
 def viewpost(post_id: int):
     single_post = posts_repository_singlton.get_post_by_id(post_id)
     post_comments = Comment_repository_singleton.get_comments(post_id)
-    return render_template('viewpost.html', current_post=single_post, comments = post_comments)
+    user_id = session['user']['user_id']
+    current_user_info = Users.query.get(user_id)
+    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info)
 
-@app.get('/comment')
+@app.post('/comment')
 def add_comment():
     user_id = session['user']['user_id']
     comment_bod = request.form.get('comment')
@@ -126,7 +128,7 @@ def add_comment():
     new_comment = Comments(user_id=user_id, comment_body=comment_bod, post_id=post_id)
     db.session.add(new_comment)
     db.session.commit()
-    pass
+    return redirect(f'/posts/{post_id}')
 
 @app.get('/signout')
 def signout():

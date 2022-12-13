@@ -4,7 +4,7 @@
 <style>
     body {
         font-family: sans-serif;
-        background-color: #F1F1F1;
+        background-image: url("../static/deskbook.jpg");
     }
     .profile-container {
         max-width: 500px;
@@ -19,6 +19,7 @@
 
     .post-container {
         margin: 0 auto;
+        background: white;
         border:2px solid red;
         border-radius: 40px;
         padding: 20px;
@@ -49,7 +50,9 @@
     .profile-details {
         list-style: none;
         padding: 0;
-        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+
     }
     .profile-details li {
         display: flex;
@@ -60,7 +63,6 @@
         font-weight: 600;
     }
 </style>
-
 </br>
 </br>
         <div class="profile-container"align ="middle">
@@ -68,14 +70,12 @@
             <div class="profile-image">
                 <img src="../static/pfp_{{pfp_num}}.jpg" align="middle" width="100" height="100"> 
             </div>
+
             <h1 class="profile-name">@{{user_page_info.username}}'s Burnbook</h1>
         </br>
                     <strong>Number of Burns: </strong> </br>50</br>
    
                     <strong>Number of Posts: </strong> </br>50
-
-            </ul>
-        </div>
     </br>
 </br>
 
@@ -84,8 +84,10 @@
         {% for post in user_posts | reverse%}
 
         <div class="shadow p-3 mb-5 bg-body rounded col-sm-10 post-container">
-            <h2 href="/posts/{{post.post_id}}">{{ post.post_title }}</h2>
-            <small>@{{ post.users.username }}</small><br/>
+            <!--<h2 href="/posts/{{post.post_id}}">{{ post.post_title }}</h2>-->
+            <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
+            
+            <br/>
             {{ post.post_body }}<br/>
         
         </div>

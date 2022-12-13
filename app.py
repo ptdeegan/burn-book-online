@@ -143,6 +143,26 @@ def create_posts_form():
     current_user_info = Users.query.get(uid)
     return render_template('create_posts_form.html', current_user_info=current_user_info)
 
+@app.get('/edit/<post_id>')
+def edit_post(post_id):
+  # code to load the item with the specified id from the database
+  post = Posts.query.get(post_id)
+  current_user_info = Users.query.get(session['user']['user_id'])
+  return render_template('editpost.html', post=post, current_user_info=current_user_info)
+ 
+      # code to save the updated item to the database
+
+@app.post('/edit/<post_id>')
+def update_post(post_id):
+    body = request.form.get('body')
+    title = request.form.get('title')
+    old_post = Posts.query.get(post_id)
+    updated_post = Posts(old_post.users.user_id, title, body)
+    posts_repository_singlton.delete_post(post_id)
+    db.session.add(updated_post)
+    db.session.commit()
+    return redirect(f'/posts/{updated_post.post_id}')
+
 @app.post('/posts')
 def create_post():
     title = request.form.get('title', '')

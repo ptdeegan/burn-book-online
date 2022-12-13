@@ -1,0 +1,21 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+<h2>Edit Post</h2>
+<div class="editform">
+    <form action="/edit/{{post.post_id}}" method="post" style = "margin-left: 43px;">
+        <div class="col-sm-9">
+            <label for="title" class="form-label">Post Title</label>
+            <input type="text" name="title" id="title" class="form-control" autocomplete="off" value={{post.post_title}} required>
+        </div>
+        <div class="col-sm-9">
+            <label for="body" class="form-label">Post Body</label>
+            <textarea class="form-control" name="body" id="exampleFormControlTextarea1" rows="3">{{post.post_body}}</textarea>
+        </div> <br/>
+        <div class="col-sm-9">
+        <button type="submit" class="btn btn-danger">Post</button>
+
+        </div>
+    </form>
+</div>
+{% endblock %}

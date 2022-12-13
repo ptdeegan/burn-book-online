@@ -45,7 +45,19 @@ class Post_Repository:
 
     #Add post interaction (like or dislike)
     def like_post(self, user_id: int, post_id: int, burn_status: bool) -> User_likes:
-        old_interaction: User_likes = User_likes.query.get(user_id, post_id)
+        old_interactions: list[User_likes] = User_likes.query.filter_by(post_id = post_id).all()
+        old_interaction: User_likes = None
+        for i in old_interactions:
+            if i.user_id == user_id:
+                old_interaction = i
+
+        if (old_interaction is None):
+            #base code that adds new interaction
+            new_interaction = User_likes(burn_status, user_id, post_id)
+            db.session.add(new_interaction)
+            db.session.commit()
+            self.burn_post_check(post_id)
+            return new_interaction 
 
         if (old_interaction.is_burn == burn_status):
             #If old interaction is the same as new we will remove the old interaction and return null
@@ -61,15 +73,7 @@ class Post_Repository:
             db.session.add(new_interaction)
             db.session.commit()
             self.burn_post_check(post_id)
-            return new_interaction
-           
-        elif (old_interaction is None):
-            #base code that adds new interaction
-            new_interaction = User_likes(burn_status, user_id, post_id)
-            db.session.add(new_interaction)
-            db.session.commit()
-            self.burn_post_check(post_id)
-            return new_interaction     
+            return new_interaction    
 
     def delete_post(self, post_id: int):
         del_post: Posts = Posts.query.get_or_404(post_id)

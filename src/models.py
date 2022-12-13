@@ -14,6 +14,7 @@ class Users(db.Model):
     admin_status = db.Column(db.Boolean, nullable = False)
     password = db.Column(db.String, nullable = False)
     posts = db.relationship('Posts', backref = db.backref('users', lazy = True))
+    user_likes = db.relationship('User_likes', backref = db.backref('users', lazy = True))
 
 #{{user_info.username}}
 
@@ -39,6 +40,7 @@ class Posts(db.Model):
     post_id = db.Column(db.Integer, primary_key = True)
     post_body = db.Column(db.String(255), nullable = False)
     burn_status = db.Column(db.Boolean, nullable = False)
+    user_likes = db.relationship('User_likes', backref = db.backref('posts', lazy = True))
 
     def __init__(self, user_id: int, title: str, body: str):
         self.user_id = user_id

@@ -1,4 +1,5 @@
 from src.models import Posts, User_likes, db
+from sqlalchemy import func
 
 class Post_Repository:
     #gets all posts
@@ -24,16 +25,9 @@ class Post_Repository:
 
     #Sum post interaction and return total
     def get_likes(self, post_id: int) -> int:
-        all_interaction: list[User_likes] = User_likes.query.filter_by(post_id = post_id).all()
-        like_total = 0
-
-        for interaction in all_interaction:
-            if interaction.is_burn == True:
-                like_total += 1
-            else:
-                like_total -= 1
-
-        return like_total
+        interactions: list[User_likes] = User_likes.query.all()
+        i = interactions.count(User_likes.is_burn == True)
+        return i
 
     def burn_post_check(self, post_id: int):
         #Need to test code still
@@ -53,26 +47,26 @@ class Post_Repository:
 
         if (old_interaction is None):
             #base code that adds new interaction
-            new_interaction = User_likes(burn_status, user_id, post_id)
+            new_interaction = User_likes(user_id, post_id, burn_status)
             db.session.add(new_interaction)
             db.session.commit()
-            self.burn_post_check(post_id)
+            #self.burn_post_check(post_id)
             return new_interaction 
 
         if (old_interaction.is_burn == burn_status):
             #If old interaction is the same as new we will remove the old interaction and return null
             db.session.delete(old_interaction)
             db.session.commit()
-            self.burn_post_check(post_id)
+            #self.burn_post_check(post_id)
             return None
         elif (old_interaction.is_burn != burn_status):
             #If old interaction is not the same as new we will remove old and add new
             db.session.delete(old_interaction)
             db.session.commit()
-            new_interaction = User_likes(burn_status, user_id, post_id)
+            new_interaction = User_likes(user_id, post_id, burn_status)
             db.session.add(new_interaction)
             db.session.commit()
-            self.burn_post_check(post_id)
+            #self.burn_post_check(post_id)
             return new_interaction    
 
     def delete_post(self, post_id: int):

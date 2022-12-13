@@ -83,11 +83,11 @@ class Post_Repository:
         db.session.commit()
 
   #Sum all of a users post interaction and returns total
-    def get_likes_for_user(self, post_id: int, user_id: int) -> int:
-        user_posts: list[user_posts] = Posts.query.filter_by(user_id)
+    def get_likes_for_user(self, user_id: int) -> int:
+        user_posts: list[user_posts] = Posts.query.filter_by(user_id=user_id)
         user_like_total = 0
         for posts in user_posts:
-            all_interaction: list[User_likes] = User_likes.query.filter_by(post_id = post_id).all()
+            all_interaction: list[User_likes] = User_likes.query.filter_by(post_id=posts.post_id).all()
             like_total = 0
 
             for interaction in all_interaction:

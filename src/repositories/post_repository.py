@@ -11,6 +11,10 @@ class Post_Repository:
         found_post: Posts = Posts.query.get_or_404(post_id)
         return found_post
 
+    def get_post_by_user(self, user_id: int) -> list[Posts]:
+        user_posts: list[Posts] = Posts.query.filter_by(user_id = user_id).all()
+        return user_posts
+
     #create posts
     def create_post(self, user_id: int, title: str, body: str) -> Posts:
         new_post = Posts(user_id, title, body)
@@ -20,7 +24,7 @@ class Post_Repository:
 
     #Sum post interaction and return total
     def get_likes(self, post_id: int) -> int:
-        all_interaction: list[User_likes] = User_likes.query.filter(User_likes.post_id == post_id).all()
+        all_interaction: list[User_likes] = User_likes.query.filter_by(post_id = post_id).all()
         like_total = 0
 
         for interaction in all_interaction:
@@ -41,7 +45,7 @@ class Post_Repository:
 
     #Add post interaction (like or dislike)
     def like_post(self, user_id: int, post_id: int, burn_status: bool) -> User_likes:
-        old_interaction: User_likes = User_likes.query.get(User_likes.user_id == user_id and User_likes.post_id == post_id)
+        old_interaction: User_likes = User_likes.query.get(user_id, post_id)
 
         if (old_interaction.is_burn == burn_status):
             #If old interaction is the same as new we will remove the old interaction and return null

@@ -161,6 +161,12 @@ def create_post():
 
 @app.post('/deletepost/<post_id>')
 def delete_post(post_id):
+    comments = Comment_repository_singleton.get_comments(post_id)
+    for comment in comments:
+        Comment_repository_singleton.delete_comment(comment.comment_id)
+    likes = like_repository_singleton.get_post_likes(post_id)
+    for like in likes:
+        like_repository_singleton.delete_like(like.like_id)
     posts_repository_singlton.delete_post(post_id)
     return redirect('/')
 
@@ -199,13 +205,13 @@ def delete_comment(comment_id):
     Comment_repository_singleton.delete_comment(comment_id)
     return redirect(f'/posts/{post_id}')
 
-@app.get('/edit/<post_id>')
+@app.post('/edit/<post_id>')
 def post_editor(post_id):
     post = Posts.query.get(post_id)
     current_user_info = Users.query.get(session['user']['user_id'])
     return render_template('edit_post.html', post=post, current_user_info=current_user_info)
 
-@app.post('/edit/<post_id>')
+@app.post('/editpost/<post_id>')
 def edit_post(post_id):
     post = Posts.query.get(post_id)
     title = request.form.get('title')
@@ -227,7 +233,13 @@ def edit_profile(user_id):
     fname = request.form.get('fname')
     lname = request.form.get('lname')
     username = request.form.get('username')
+    if Users.query.filter_by(username=username).first():
+        flash('Account already exists with this username, please try again')
+        return redirect(f'/editprofile/{user_id}')
     email = request.form.get('email')
+    if Users.query.filter_by(email=email).first():
+        flash('Account already exists with this email, please try again')
+        return redirect(f'/editprofile/{user_id}')
     user.firstname = fname
     user.lastname = lname
     user.username = username

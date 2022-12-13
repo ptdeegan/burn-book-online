@@ -61,8 +61,7 @@
       <h6><a href="/profile/{{current_post.users.user_id}}" class="badge badge-light">@{{current_post.users.username}}</a></h6>
       {{current_post.post_body}}</br><br>
 
-    <h5>{{num_burns}}</h5>
-    <div style="float:left; padding-right: 10px;">
+    <!-- <div style="float:left; padding-right: 10px;"> -->
       <h5>{{num_burns}}</h5>
       <table>
         <tr>
@@ -80,7 +79,7 @@
         <button class="burn-button" id="button">Douse</button>
       </form>
     </th>
-    </div>
+    <!-- </div> -->
     {% if current_user_info.admin_status or same_user %}
     <th>
       <p style="color: white;">...................................................................</p>
@@ -99,9 +98,7 @@
     {% endif %}
     </tr>
     </table>
- 
-
-    </div>
+     </div>
     <br>
 
     <div class ="comment-container">

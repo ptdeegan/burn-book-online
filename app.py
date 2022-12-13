@@ -73,7 +73,9 @@ def makeProfile():
     'user_id': new_user.user_id,
     }
 
-    return redirect('/profile')
+    uid = new_user.user_id
+
+    return redirect(f'/profile/{uid}')
 
 
 
@@ -101,7 +103,8 @@ def letLogin():
     'username' : user.username,
     'user_id': user.user_id,
     }
-    return redirect('/profile')
+    uid = session['user']['user_id']
+    return redirect(f'/profile/{uid}')
 
 @app.get('/login')
 def login():
@@ -118,4 +121,17 @@ def signout():
     del session['user']
     return redirect('/login')
 
+@app.get('/posts/new')
+def create_posts_form():
+    uid = session['user']['user_id']
+    current_user_info = Users.query.get(uid)
+    return render_template('create_posts_form.html', current_user_info=current_user_info)
 
+@app.post('/posts')
+def create_post():
+    title = request.form.get('title', '')
+    body = request.form.get('body', '')
+    uid = session['user']['user_id']
+
+    posts_repository_singlton.create_post(uid, title, body)
+    return redirect('/')

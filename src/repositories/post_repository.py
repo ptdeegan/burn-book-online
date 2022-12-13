@@ -40,7 +40,7 @@ class Post_Repository:
     def burn_post_check(self, post_id: int):
         #Need to test code still
         i = self.get_likes(post_id)
-        if (i > 3):
+        if (i > 2):
             modPost = self.get_post_by_id(post_id)
             modPost.post_body = "Burned!"
             db.session.commit()
@@ -58,14 +58,14 @@ class Post_Repository:
             new_interaction = User_likes(user_id, post_id, burn_status)
             db.session.add(new_interaction)
             db.session.commit()
-            #self.burn_post_check(post_id)
+            self.burn_post_check(post_id)
             return new_interaction 
 
         if (old_interaction.is_burn == burn_status):
             #If old interaction is the same as new we will remove the old interaction and return null
             db.session.delete(old_interaction)
             db.session.commit()
-            #self.burn_post_check(post_id)
+            self.burn_post_check(post_id)
             return None
         elif (old_interaction.is_burn != burn_status):
             #If old interaction is not the same as new we will remove old and add new
@@ -74,7 +74,7 @@ class Post_Repository:
             new_interaction = User_likes(user_id, post_id, burn_status)
             db.session.add(new_interaction)
             db.session.commit()
-            #self.burn_post_check(post_id)
+            self.burn_post_check(post_id)
             return new_interaction    
 
     def delete_post(self, post_id: int):

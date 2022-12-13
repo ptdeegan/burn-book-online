@@ -118,7 +118,8 @@ def viewpost(post_id: int):
     post_comments = Comment_repository_singleton.get_comments(post_id)
     user_id = session['user']['user_id']
     current_user_info = Users.query.get(user_id)
-    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info)
+    num_burns=posts_repository_singlton.get_likes(post_id=post_id)
+    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info, num_burns=num_burns)
 
 @app.post('/comment')
 def add_comment():
@@ -156,3 +157,15 @@ def create_post():
 def delete_post(post_id):
     posts_repository_singlton.delete_post(post_id)
     return redirect('/')
+
+@app.post('/burnpost/<post_id>')
+def burn_post(post_id):
+    user_id = request.form.get('user_id')
+    posts_repository_singlton.like_post(post_id=post_id, user_id=user_id, burn_status=True)
+    return redirect(f'/posts/{post_id}')
+
+@app.post('/dousepost/<post_id>')
+def douse_post(post_id):
+    user_id = request.form.get('user_id')
+    posts_repository_singlton.like_post(post_id=post_id, user_id=user_id, burn_status=False)
+    return redirect(f'/posts/{post_id}')

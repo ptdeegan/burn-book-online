@@ -25,8 +25,16 @@ class Post_Repository:
 
     #Sum post interaction and return total
     def get_likes(self, post_id: int) -> int:
-        interactions: list[User_likes] = User_likes.query.all()
-        i = interactions.count(User_likes.is_burn == True)
+        interactions: list[User_likes] = User_likes.query.filter_by(post_id=post_id).all()
+        i = 0
+
+        for inter in interactions:
+            print("sanity check")
+            if inter.is_burn == True:
+                i += 1
+            else:
+                i -= 1
+
         return i
 
     def burn_post_check(self, post_id: int):

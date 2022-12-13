@@ -8,8 +8,8 @@ def test_burn_count():
         db.session.commit()
         posts_repository_singlton.like_post(1, 1, True)
         posts_repository_singlton.like_post(2, 1, True)
-        posts_repository_singlton.like_post(3, 1, True)
+        posts_repository_singlton.like_post(3, 1, False)
 
         i =  posts_repository_singlton.get_likes(1)
 
-        assert i == 3
+        assert i == 1

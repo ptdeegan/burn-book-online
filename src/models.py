@@ -49,6 +49,7 @@ class Posts(db.Model):
 
 class User_likes(db.Model):
     __tablename__ = 'user_likes'
+    like_id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable = False)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), nullable = False)
     is_burn = db.Column(db.Boolean, primary_key = True)

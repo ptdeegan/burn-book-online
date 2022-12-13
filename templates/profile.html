@@ -82,8 +82,10 @@
         {% for post in user_posts %}
 
         <div class="shadow p-3 mb-5 bg-body rounded col-sm-10 post-container">
-            <h2 href="/posts/{{post.post_id}}">{{ post.post_title }}</h2>
-            <small>@{{ post.users.username }}</small><br/>
+            <!--<h2 href="/posts/{{post.post_id}}">{{ post.post_title }}</h2>-->
+            <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
+            
+            <br/>
             {{ post.post_body }}<br/>
         
         </div>

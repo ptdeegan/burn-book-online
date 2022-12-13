@@ -1,0 +1,16 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+<strong>
+<h1 style="color: black;"font-family="verdana;">Edit Post</h1>
+</strong>
+
+<form action="/makeedit/{{comment.comment_id}}" method="POST" style="padding-left: 10px">
+    <input type="hidden" name="post_id" id="post_id" value="{{post.post_id}}">
+    <h6>Body</h6>
+    <textarea id="body" name="body" cols="50" rows="5">{{comment.comment_body}}</textarea><br>
+    <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Confirm edits</button>
+</form>
+
+{% endblock %}

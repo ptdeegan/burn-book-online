@@ -1,7 +1,8 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1 class="mb-5">Create Movie Rating</h1>
+<h1 class="mb-5"></h1>
+<h2>Had a bad day? Tell everyone how pissed you are!</h2>
 <div class="mb-3">
     <form action="/posts" method="post">
         <div class="col-sm-9">
@@ -10,10 +11,10 @@
         </div>
         <div class="col-sm-9">
             <label for="body" class="form-label">Post Body</label>
-            <input type="text" name="body" id="body" class="form-control" autocomplete="off" required>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div> <br/>
         <div class="col-sm-9">
-        <button type="submit" class="btn btn-primary">Create Post!</button>
+        <button type="submit" class="btn btn-danger">Post</button>
         </div>
     </form>
 </div>

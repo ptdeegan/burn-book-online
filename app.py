@@ -40,7 +40,9 @@ def profile(user_id):
     current_user_info = Users.query.get(session['user']['user_id'])
     pfp_num = session['user']['user_id'] % 10
     user_posts = Posts.query.filter_by(user_id=user_id).all()
-    return render_template('profile.html', pfp_num=pfp_num, user_page_info = user_page_info, current_user_info=current_user_info, same_user = same_user, user_posts=user_posts)
+    num_likes = posts_repository_singlton.get_likes_for_user(user_id)
+    num_posts = len(posts_repository_singlton.get_post_by_user(user_id))
+    return render_template('profile.html', pfp_num=pfp_num, user_page_info = user_page_info, current_user_info=current_user_info, same_user = same_user, user_posts=user_posts, num_likes=num_likes, num_posts=num_posts)
 
 @app.post('/signup')
 def makeProfile():

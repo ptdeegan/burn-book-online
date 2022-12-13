@@ -1,8 +1,8 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1>Home Page</h1>
-<table class="table">
+<h1>Burn Feed</h1>
+<!-- <table class="table">
     <thead>
         <tr>
             <th>User</th>
@@ -19,5 +19,16 @@
         </tr>
         {% endfor %}
     </tbody>
-</table>
+</table> -->
+{% for post in posts %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <h2>{{ post.post_title }}</h2><br/>
+    <small>@{{ post.users.username }}</small><br/>
+    {{ post.post_body }}<br/>
+
+</div>
+
+{% endfor %}
 {% endblock %}
+    

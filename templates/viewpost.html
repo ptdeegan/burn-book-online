@@ -15,8 +15,7 @@
     }
 
     .comment-container {
-        max-width: 600px;
-        height: 300px;
+        max-width: 800px;
         margin: 0 auto;
         background-color: pink;
         border:2px solid rgb(226, 83, 83);
@@ -26,7 +25,6 @@
     }
 
     .burn-button {
-  position: absolute;
   bottom: 0;
   right: 0;
 }
@@ -38,10 +36,11 @@
     <br>
     <br>
     <div class ="post-container">
-            <h1>{{current_post.post_title}}</h1>
+      <h1>{{current_post.post_title}}</h1>
       <h6>{{current_post.users.username}}</h6>
-      <p style="border-width:1px; border-style:solid;">{{current_post.post_body}}</p><br>
-      <button class="burn-button" id="button">Click me!</button>
+      <p style="border-width:1px; border-style:solid;">{{current_post.post_body}}</p></br>
+      <button class="burn-button" id="button">Burn</button>
+      <button class="burn-button" id="button">Douse</button>
     </div>
     <br>
     <div class ="comment-container">
@@ -53,20 +52,17 @@
         <textarea id="comment" name="comment" placeholder="Comment here"></textarea><br>
         <input type="submit" value="Submit">
       </form>
-      
-      <table>
-        <tbody>
-          {% for comment in comments|reverse %}
-          <tr>
-              <td>{{ comment.users.username }}</td>
-              <td>{{ comment.comment_body }}</td>
-          </tr>
-          {% endfor %}
-      </table>
-    </div>
-  
+    </br>
+      {% for comment in comments|reverse %}
 
-   
+      <div class="shadow p-3 mb-5" style="background-color:white; border-radius: 10px;">
+      <strong>@{{ comment.users.username }}</strong>
+      </br>{{ comment.comment_body }}
+      </div>
+
+      {% endfor %}
+    </div>
+
     
     <div class="navbar">
       <a href="#BBOYT" class="active">BBOYT</a>

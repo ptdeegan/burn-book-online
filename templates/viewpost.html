@@ -88,13 +88,13 @@
     
     <div class ="divcenter">
       <h1>{{current_post.post_title}}</h1>
-      <h6>{{current_post.users.username</h6>
+      <h6>{{current_post.users.username}}</h6>
       <p style="border-width:1px; border-style:solid;">{{current_post.post_body}}</p><br>
     
       <h3>Comments</h3>
       
       <form action="/comment" method="POST">
-        <input class="hidden" name="post_id" value={{current_post.post_id}}>
+        <input type="hidden" name="post_id" value={{current_post.post_id}}>
         <label for="comment">Spill some Tea:</label><br>
         <textarea id="comment" name="comment" placeholder="Comment here"></textarea><br>
         <input type="submit" value="Submit">
@@ -102,10 +102,10 @@
       
       <table>
         <tbody>
-          {% for comment in comments %}
+          {% for comment in comments|reverse %}
           <tr>
-              <td>{{ comments.users.username }}</td>
-              <td>{{ comments.comment_body }}</td>
+              <td>{{ comment.users.username }}</td>
+              <td>{{ comment.comment_body }}</td>
           </tr>
           {% endfor %}
       </table>

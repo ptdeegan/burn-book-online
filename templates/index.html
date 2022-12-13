@@ -1,23 +1,16 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1>Home Page</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>User</th>
-            <th>Title</th>
-            <th>Post Body</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for post in posts %}
-        <tr>
-            <td>{{ post.users.username }}</td>
-            <td>{{ post.post_title }}</td>
-            <td>{{ post.post_body }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<h1>Burn Feed</h1>
+{% for post in posts %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
+    <small><a href="/profile/{{post.users.user_id}}" class="badge badge-dark">@{{ post.users.username }}</a></small><br><br>
+    {{ post.post_body }}<br/>
+
+</div>
+
+{% endfor %}
 {% endblock %}
+    

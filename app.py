@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, redirect, session, flash, url
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from src.repositories.post_repository import posts_repository_singlton
+from src.repositories.comment_repository import Comment_repository_singleton
 import random 
 import os
 from dotenv import load_dotenv
@@ -36,7 +37,8 @@ def profile(user_id):
     user_page_info = Users.query.get(user_id)
     current_user_info = Users.query.get(session['user']['user_id'])
     pfp_num = session['user']['user_id'] % 10
-    return render_template('profile.html', pfp_num=pfp_num, user_page_info = user_page_info, current_user_info=current_user_info, same_user = same_user)
+    user_posts = Posts.query.filter_by(user_id=user_id).all()
+    return render_template('profile.html', pfp_num=pfp_num, user_page_info = user_page_info, current_user_info=current_user_info, same_user = same_user, user_posts=user_posts)
 
 @app.post('/signup')
 def makeProfile():
@@ -110,9 +112,23 @@ def letLogin():
 def login():
     return render_template('login.html')
 
-@app.get('/viewpost')
-def viewpost():
-    return render_template('viewpost.html')
+@app.get('/posts/<post_id>')
+def viewpost(post_id: int):
+    single_post = posts_repository_singlton.get_post_by_id(post_id)
+    post_comments = Comment_repository_singleton.get_comments(post_id)
+    user_id = session['user']['user_id']
+    current_user_info = Users.query.get(user_id)
+    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info)
+
+@app.post('/comment')
+def add_comment():
+    user_id = session['user']['user_id']
+    comment_bod = request.form.get('comment')
+    post_id = request.form.get('post_id') 
+    new_comment = Comments(user_id=user_id, comment_body=comment_bod, post_id=post_id)
+    db.session.add(new_comment)
+    db.session.commit()
+    return redirect(f'/posts/{post_id}')
 
 @app.get('/signout')
 def signout():

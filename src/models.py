@@ -14,6 +14,7 @@ class Users(db.Model):
     admin_status = db.Column(db.Boolean, nullable = False)
     password = db.Column(db.String, nullable = False)
     posts = db.relationship('Posts', backref = db.backref('users', lazy = True))
+    comments = db.relationship('Comments', backref = db.backref('users', lazy = True))
 
 #{{user_info.username}}
 
@@ -64,8 +65,7 @@ class Comments(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), nullable = False)
     comment_body = db.Column(db.String, nullable = False)
 
-    def __init__(self, comment_id: int, user_id: int, post_id: int, comment_body: str):
-        self.comment_id = comment_id
+    def __init__(self, user_id: int, post_id: int, comment_body: str):
         self.user_id = user_id
         self.post_id = post_id
         self.comment_body = comment_body

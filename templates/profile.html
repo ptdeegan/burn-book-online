@@ -1,46 +1,96 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1>Profile Page</h1>x
+<style>
+    body {
+        font-family: sans-serif;
+        background-image: url("../static/deskbook.jpg");
+    }
+    .profile-container {
+        max-width: 600px;
+        height: 300px;
+        margin: 0 auto;
+        background-color: pink;
+        border:2px solid red;
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
 
-{%if pfp_num==1%}
+    .post-container {
+        margin: 0 auto;
+        background: white;
+        border:2px solid red;
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    .profile-image {
+        text-align: center;
+        margin-bottom: 30px;
+        
+    }
+    .profile-image img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border:2px solid red;
 
-<img src="{{url_for('static', filename='cadyphone_pfp.jpg')}}" align="middle" width="100" height="100">
+    }
+    .profile-name {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .profile-bio {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .profile-details {
+        list-style: none;
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
 
-<!-- <img src="static/pfp_{{pfp_num}}.jpg" align="middle" width="100" height="100"> -->
+    }
+    .profile-details li {
+        display: flex;
+        margin-bottom: 10px;
+    }
+    .profile-details li strong {
+        min-width: 100px;
+        font-weight: 600;
+    }
+</style>
+<h1 style = "color:white;" align ="middle">@{{user_page_info.username}}'s Burn Book</h1>
 
-{%elif pfp_num==2%}
+        <div class="profile-container"align ="middle">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <div class="profile-image">
+                <img src="../static/pfp_{{pfp_num}}.jpg" align="middle" width="100" height="100"> 
+            </div>
+            <h1 class="profile-name">{{user_page_info.username}}</h1>
+            <ul class="profile-details" text-align: "center">
+                <li>
+                    <strong>Number of Posts: </strong>  3
+                </li>
+            </ul>
+        </div>
+    </br>
+</br>
+        {% for post in user_posts %}
 
-<img src="{{url_for('static', filename='damian_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-{%elif pfp_num==3%}
-
-<img src="{{url_for('static', filename='gretchen_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-{%elif pfp_num==4%}
-
-<img src="{{url_for('static', filename='janis_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-{%elif pfp_num==5%}
-
-<img src="{{url_for('static', filename='karen_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-{%elif pfp_num==6%}
-
-<img src="{{url_for('static', filename='karenphone_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-{%elif pfp_num==7%}
-
-<img src="{{url_for('static', filename='profile_pic.jpg')}}" align="middle" width="100" height="100">
-
-{%elif pfp_num==8%}
-
-<img src="{{url_for('static', filename='regina_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-{%elif pfp_num==9%}
-
-<img src="{{url_for('static', filename='reginabunny_pfp.jpg')}}" align="middle"  width="100" height="100">
-
-{% endif %}
-
+        <div class="shadow p-3 mb-5 bg-body rounded col-sm-10 post-container">
+            <!--<h2 href="/posts/{{post.post_id}}">{{ post.post_title }}</h2>-->
+            <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
+            
+            <br/>
+            {{ post.post_body }}<br/>
+        
+        </div>
+        
+        {% endfor %}
+    </body>
+    </html>
 {% endblock %}

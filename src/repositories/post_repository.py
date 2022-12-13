@@ -76,5 +76,21 @@ class Post_Repository:
         db.session.delete(del_post)
         db.session.commit()
 
+  #Sum all of a users post interaction and returns total
+    def get_likes_for_user(self, post_id: int, user_id: int) -> int:
+        user_posts: list[user_posts] = Posts.query.filter_by(user_id)
+        user_like_total = 0
+        for posts in user_posts:
+            all_interaction: list[User_likes] = User_likes.query.filter_by(post_id = post_id).all()
+            like_total = 0
+
+            for interaction in all_interaction:
+                if interaction.is_burn == True:
+                    like_total += 1
+                else:
+                    like_total -= 1
+            user_like_total = user_like_total + like_total
+        return user_like_total
+
 #Singlton for other module use
 posts_repository_singlton = Post_Repository()

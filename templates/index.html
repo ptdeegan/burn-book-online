@@ -1,16 +1,54 @@
 {% extends '_layout.html' %}
 
 {% block body %}
-<h1>Burn Feed</h1>
-{% for post in posts %}
 
-<div class="shadow p-3 mb-5 bg-body rounded">
-    <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
-    <small><a href="/profile/{{post.users.user_id}}" class="badge badge-dark">@{{ post.users.username }}</a></small><br><br>
-    {{ post.post_body }}<br/>
+<style>
+    .postview {
+        font-family: sans-serif;
+        background-image: url("../static/deskbook.jpg");
+    }
 
+    .post-container {
+        margin: 0 auto;
+        background: white;
+        border:2px solid red;
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    .allpostcont {
+        max-width: 700px;
+        margin: 0 auto;
+        background-color: #F2F2F2; 
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+
+
+
+</style>
+<body class="postview">
+<div class="allpostcont">
+
+<strong>
+<center>
+<h1 style="color: black;"font-family="verdana;">Burn Feed</h1>
+</center>
+</strong>
+    {% for post in posts|reverse %}
+
+    <div class="shadow p-3 mb-5 bg-body rounded col-sm-11 post-container">
+        <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
+        <small><a href="/profile/{{post.users.user_id}}" class="badge badge-dark">@{{ post.users.username }}</a></small><br><br>
+        {{ post.post_body }}<br/>
+
+    </div>
+    {% endfor %}
 </div>
 
-{% endfor %}
+</body>
+
 {% endblock %}
     

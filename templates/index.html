@@ -4,6 +4,7 @@
 <h1>Burn Feed</h1>
 {% for post in posts %}
 
+
 <div class="shadow p-3 mb-5 bg-body rounded">
     <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
     <small><a href="/profile/{{post.users.user_id}}" class="badge badge-dark">@{{ post.users.username }}</a></small><br><br>

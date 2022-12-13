@@ -120,7 +120,10 @@ def viewpost(post_id: int):
     post_comments = Comment_repository_singleton.get_comments(post_id)
     user_id = session['user']['user_id']
     current_user_info = Users.query.get(user_id)
-    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info)
+    same_user = False
+    if int(user_id) == session["user"]["user_id"]:
+        same_user = True
+    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info, same_user=same_user)
 
 @app.post('/comment')
 def add_comment():
@@ -173,4 +176,10 @@ def delete_profile(profile_id):
     profile_repository_singleton.delete_profile(profile_id)
     del session['user']
     return redirect('/')
+
+@app.post('/deletecomment/<comment_id>')
+def delete_comment(comment_id):
+    post_id = request.form.get('post_id')
+    Comment_repository_singleton.delete_comment(comment_id)
+    return redirect(f'/posts/{post_id}')
 

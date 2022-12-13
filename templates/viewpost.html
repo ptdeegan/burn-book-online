@@ -3,94 +3,48 @@
 {% block body %}
 
 <style>
-  back
-  .sidenav {
-    width: 130px;
-    background-color: lightpink;
-    position: fixed;
-    z-index: 1;
-    top: 100px;
-    left: 10px;
-    background: #eee;
-    overflow-x: hidden;
-    padding: 8px 0;
-    width:13%;
-    float: left;
-    
-  }
-  
-  
-  .sidenav a {
-    
-    color: lightpink;
-    background-color: lightpink;
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #2196F3;
-    display: block;
-  }
-  
-  .sidenav a:hover {
-    color: #064579;
-  }
-  
-  
-  .divcenter{
-    
-    background-color: lightpink;
-    background-position-y: 1cm;
-    padding-top: 0cm;
-    margin: 0 auto;
-    width:69%;
-  }
-  .divright{
-    float: right;
-    width:14%;
-  }
-  .navbar {
-    background-color: #333;
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  
-  .navbar a {
-  float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
+  .post-container {
+        max-width: 800px;
+        height: 300px;
+        margin: 0 auto;
+        background-color: pink;
+        border:2px solid rgb(209, 88, 88);
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
 
-  .navbar a:hover {
-    background-color: #ddd;
-  color: black;
-  }
-  
-  
-  .navbar a.active {
-  background-color: #04AA6D;
-    color: white;
-  }
+    .comment-container {
+        max-width: 600px;
+        height: 300px;
+        margin: 0 auto;
+        background-color: pink;
+        border:2px solid rgb(226, 83, 83);
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .burn-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
 </style>
-
-
 
   <body style="background-color:mistyrose" >
     
   
-    
-    <div class ="divcenter">
-      <h1>{{current_post.post_title}}</h1>
+    <br>
+    <br>
+    <div class ="post-container">
+            <h1>{{current_post.post_title}}</h1>
       <h6>{{current_post.users.username}}</h6>
       <p style="border-width:1px; border-style:solid;">{{current_post.post_body}}</p><br>
-    
+      <button class="burn-button" id="button">Click me!</button>
+    </div>
+    <br>
+    <div class ="comment-container">
       <h3>Comments</h3>
       
       <form action="/comment" method="POST">
@@ -112,9 +66,7 @@
     </div>
   
 
-    <div class="divright">
-      <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe commodi aperiam eligendi blanditiis eos repellendus fugiat eveniet autem rerum dolor perferendis sapiente, ratione nobis praesentium amet quisquam quibusdam adipisci placeat!</p>
-    </div>
+   
     
     <div class="navbar">
       <a href="#BBOYT" class="active">BBOYT</a>

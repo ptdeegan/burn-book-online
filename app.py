@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, redirect, session, flash, url
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from src.repositories.post_repository import posts_repository_singlton
+from src.repositories.comment_repository import Comment_repository_singleton
 import random 
 import os
 from dotenv import load_dotenv
@@ -111,9 +112,21 @@ def letLogin():
 def login():
     return render_template('login.html')
 
-@app.get('/viewpost')
-def viewpost():
-    return render_template('viewpost.html')
+@app.get('/posts/<post_id>')
+def viewpost(post_id: int):
+    single_post = posts_repository_singlton.get_post_by_id(post_id)
+    post_comments = Comment_repository_singleton.get_comments(post_id)
+    return render_template('viewpost.html', current_post=single_post, comments = post_comments)
+
+@app.get('/comment')
+def add_comment():
+    user_id = session['user']['user_id']
+    comment_bod = request.form.get('comment')
+    post_id = request.form.get('post_id') 
+    new_comment = Comments(user_id=user_id, comment_body=comment_bod, post_id=post_id)
+    db.session.add(new_comment)
+    db.session.commit()
+    pass
 
 @app.get('/signout')
 def signout():

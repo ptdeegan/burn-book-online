@@ -14,6 +14,7 @@ class Users(db.Model):
     admin_status = db.Column(db.Boolean, nullable = False)
     password = db.Column(db.String, nullable = False)
     posts = db.relationship('Posts', backref = db.backref('users', lazy = True))
+    comments = db.relationship('Comments', backref = db.backref('users', lazy = True))
 
 #{{user_info.username}}
 

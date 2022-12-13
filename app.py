@@ -110,10 +110,16 @@ def letLogin():
 def login():
     return render_template('login.html')
 
-@app.get('/viewpost')
-def viewpost():
-    return render_template('viewpost.html')
+@app.get('/posts/<int:post_id>')
+def viewpost(post_id: int):
+    single_post = posts_repository_singlton.get_post_by_id(post_id)
+    return render_template('viewpost.html', current_post=single_post)
 
+@app.get('/comment')
+def add_comment():
+    user_id = session['user']['user_id']
+    comment_bod = request.form.get(body)
+    
 @app.get('/signout')
 def signout():
     if not session['user']:

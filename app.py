@@ -4,6 +4,8 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from src.repositories.post_repository import posts_repository_singlton
 from src.repositories.comment_repository import Comment_repository_singleton
+from src.repositories.profile_repository import profile_repository_singleton
+from src.repositories.likes_repository import like_repository_singleton
 import random 
 import os
 from dotenv import load_dotenv
@@ -32,7 +34,7 @@ def home():
 @app.get('/profile/<user_id>')
 def profile(user_id):
     same_user = False
-    if user_id == session["user"]["user_id"]:
+    if int(user_id) == session["user"]["user_id"]:
         same_user = True
     user_page_info = Users.query.get(user_id)
     current_user_info = Users.query.get(session['user']['user_id'])
@@ -118,7 +120,11 @@ def viewpost(post_id: int):
     post_comments = Comment_repository_singleton.get_comments(post_id)
     user_id = session['user']['user_id']
     current_user_info = Users.query.get(user_id)
-    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info)
+    num_burns=posts_repository_singlton.get_likes(post_id=post_id)
+    same_user = False
+    if int(user_id) == session["user"]["user_id"]:
+        same_user = True
+    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info, same_user=same_user, num_burns=num_burns)
 
 @app.post('/comment')
 def add_comment():
@@ -156,3 +162,38 @@ def create_post():
 def delete_post(post_id):
     posts_repository_singlton.delete_post(post_id)
     return redirect('/')
+
+
+@app.post('/burnpost/<post_id>')
+def burn_post(post_id):
+    user_id = request.form.get('user_id')
+    posts_repository_singlton.like_post(post_id=post_id, user_id=user_id, burn_status=True)
+    return redirect(f'/posts/{post_id}')
+
+@app.post('/dousepost/<post_id>')
+def douse_post(post_id):
+    user_id = request.form.get('user_id')
+    posts_repository_singlton.like_post(post_id=post_id, user_id=user_id, burn_status=False)
+    return redirect(f'/posts/{post_id}')
+
+@app.post('/deleteprofile/<profile_id>')
+def delete_profile(profile_id):
+    user_likes = like_repository_singleton.get_user_likes(profile_id)
+    for like in user_likes:
+        like_repository_singleton.delete_like(like.like_id)
+    user_posts = posts_repository_singlton.get_post_by_user(profile_id)
+    for post in user_posts:
+        comments = Comment_repository_singleton.get_comments(post.post_id)
+        for comment in comments:
+            Comment_repository_singleton.delete_comment(comment.comment_id)
+        posts_repository_singlton.delete_post(post.post_id)
+    profile_repository_singleton.delete_profile(profile_id)
+    del session['user']
+    return redirect('/')
+
+@app.post('/deletecomment/<comment_id>')
+def delete_comment(comment_id):
+    post_id = request.form.get('post_id')
+    Comment_repository_singleton.delete_comment(comment_id)
+    return redirect(f'/posts/{post_id}')
+

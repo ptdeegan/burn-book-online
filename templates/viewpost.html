@@ -57,6 +57,7 @@
 
     <div class ="post-container">
       <h1>{{current_post.post_title}}</h1>
+
       <h6><a href="/profile/{{current_post.users.user_id}}" class="badge badge-light">@{{current_post.users.username}}</a></h6>
       {{current_post.post_body}}</br><br>
 
@@ -65,6 +66,21 @@
       </button>
       
       <button class="burn-button" id="button">Douse</button>
+      
+      <h5>{{num_burns}}</h5>
+      <p style="border-width:1px; border-style:solid;">{{current_post.post_body}}</p></br>
+      <form action="/burnpost/{{current_post.post_id}}" method="POST">
+        <input type="hidden" name="post_id" value={{current_post.post_id}}>
+        <input type="hidden" name="user_id" value={{current_post.users.user_id}}>
+        <button class="burn-button" id="button">Burn</button>
+      </form>
+      
+      <form action="/dousepost/{{current_post.post_id}}" method="POST">
+        <input type="hidden" name="post_id" value={{current_post.post_id}}>
+        <input type="hidden" name="user_id" value={{current_post.users.user_id}}>
+        <button class="burn-button" id="button">Douse</button>
+      </form>
+
     </div>
     <br>
     <div class ="comment-container">
@@ -85,6 +101,14 @@
       <div class="shadow p-3 mb-5" style="background-color:white; border-radius: 10px;">
       <strong><a href="/profile/{{comment.users.user_id}}" class="badge badge-light">@{{ comment.users.username }}</a></strong>
       </br>{{ comment.comment_body }}
+
+      {% if current_user_info.admin_status or same_user %}
+            <form action="/deletecomment/{{comment.comment_id}}" method="POST">
+                <input type="hidden" name="post_id" value={{current_post.post_id}}>
+                <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Delete comment</button>
+            </form>
+      {% endif %}
+
       </div>
 
       {% endfor %}

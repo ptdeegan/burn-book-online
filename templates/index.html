@@ -43,7 +43,12 @@
         <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
         <small><a href="/profile/{{post.users.user_id}}" class="badge badge-dark">@{{ post.users.username }}</a></small><br><br>
         {{ post.post_body }}<br/>
-
+        <br>
+        {% if current_user_info.admin_status %}
+        <form action="/deletepost/{{post.post_id}}" method="POST">
+            <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Delete post</button>
+        </form>
+        {% endif %}
     </div>
     {% endfor %}
 

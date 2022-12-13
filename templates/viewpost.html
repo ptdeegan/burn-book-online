@@ -62,21 +62,41 @@
       {{current_post.post_body}}</br><br>
 
       <h5>{{num_burns}}</h5>
-    <div style="float:left; padding-right: 10px;">
+      <table>
+        <tr>
+          <th>
       <form action="/burnpost/{{current_post.post_id}}" method="POST" class="burn-button">
         <input type="hidden" name="post_id" value={{current_post.post_id}}>
         <input type="hidden" name="user_id" value={{current_post.users.user_id}}>
         <button class="burn-button" id="button">Burn</button>
       </form>
-    </div>
-
-    <div style="float:left">
+    </th>
+    <th>
       <form action="/dousepost/{{current_post.post_id}}" method="POST" class="burn-button">
         <input type="hidden" name="post_id" value={{current_post.post_id}}>
         <input type="hidden" name="user_id" value={{current_post.users.user_id}}>
         <button class="burn-button" id="button">Douse</button>
       </form>
-    </div>
+    </th>
+    {% if current_user_info.admin_status or same_user %}
+    <th>
+      <p style="color: white;">...................................................................</p>
+    </th>
+    <th>
+      <form action="/edit/{{current_post.post_id}}" method="POST">
+          <input type="hidden" name="post_id" value={{current_post.post_id}}>
+          <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Edit post</button>
+      </form>
+    </th>
+    <th>
+      <form action="/deletepost/{{current_post.post_id}}" method="POST">
+          <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Delete post</button>
+      </form>
+    </th>
+    {% endif %}
+    </tr>
+    </table>
+ 
 
     </div>
     <br>

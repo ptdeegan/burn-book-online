@@ -69,9 +69,20 @@
 </br>
 </br>
         {% if current_user_info.admin_status or same_user %}
-        <form action="/deleteprofile/{{user_page_info.user_id}}" method="POST">
-            <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Delete user</button>
-        </form>
+        <table>
+            <tr>
+            <th>
+                <form action="/editprofile/{{user_page_info.user_id}}" method="GET">
+                    <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Edit profile</button>
+                </form>
+              </th>
+              <th>
+                <form action="/deleteprofile/{{user_page_info.user_id}}" method="POST">
+                    <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Delete user</button>
+                </form>
+              </th>
+            </tr>
+        </table>
         {% endif %}
         <div class="profile-container"align ="middle">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -101,7 +112,7 @@
             <table>
                 <tr>
                     <th>
-                        <form action="/edit/{{post.post_id}}" method="GET">
+                        <form action="/edit/{{post.post_id}}" method="POST">
                             <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Edit post</button>
                         </form>
                     </th>

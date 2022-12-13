@@ -67,14 +67,14 @@
           <th>
       <form action="/burnpost/{{current_post.post_id}}" method="POST" class="burn-button">
         <input type="hidden" name="post_id" value={{current_post.post_id}}>
-        <input type="hidden" name="user_id" value={{current_post.users.user_id}}>
+        <input type="hidden" name="user_id" value={{current_user_info.user_id}}>
         <button class="burn-button" id="button">Burn</button>
       </form>
     </th>
     <th>
       <form action="/dousepost/{{current_post.post_id}}" method="POST" class="burn-button">
         <input type="hidden" name="post_id" value={{current_post.post_id}}>
-        <input type="hidden" name="user_id" value={{current_post.users.user_id}}>
+        <input type="hidden" name="user_id" value={{current_user_info.user_id}}>
         <button class="burn-button" id="button">Douse</button>
       </form>
     </th>

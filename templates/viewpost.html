@@ -80,7 +80,7 @@
       <form action="/dousepost/{{current_post.post_id}}" method="POST" class="burn-button">
         <input type="hidden" name="post_id" value={{current_post.post_id}}>
         <input type="hidden" name="user_id" value={{current_user_info.user_id}}>
-        <button class="btn button-primary bottom: 0; right: 0;" id="button"><img src="{{ url_for('static', filename='bucketWater.gif') }}" style="width:50px;height:50px; border:none;background-color:white;"></button>
+        <button class="btn button-primary bottom: 0; right: 0;" aria-pressed="true" id="button"><img src="{{ url_for('static', filename='bucketWater.gif') }}" style="width:50px;height:50px; border:none;background-color:white;"></button>
       </form>
     </th>
     <!-- </div> -->
@@ -149,14 +149,6 @@
 
       {% endfor %}
     </div>
-
-    
-    <div class="navbar">
-      <a href="#BBOYT" class="active">BBOYT</a>
-      <a href="#">BBO INSTA</a>
-      <a href="#contact">BBO Twitter</a>
-    </div> 
-  </div>
 
 </body>
 {% endblock %}

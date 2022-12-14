@@ -52,7 +52,7 @@ class User_likes(db.Model):
     like_id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable = False)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), nullable = False)
-    is_burn = db.Column(db.Boolean, primary_key = True)
+    is_burn = db.Column(db.Boolean, nullable = False)
 
     def __init__(self, user_id: int, post_id: int, burn: bool,):
         self.user_id = user_id

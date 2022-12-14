@@ -5,10 +5,16 @@
     body {
         font-family: sans-serif;
         background-image: url("../static/deskbook.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+
+
     }
     .profile-container {
         max-width: 500px;
-        height: 343px;
+        height: 364px;
         margin: 0 auto;
         background-color: pink;
         border:2px solid red;
@@ -26,7 +32,6 @@
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
         overflow: auto;
     }
-    
     
     
     .profile-image {
@@ -68,30 +73,32 @@
 </style>
 </br>
 </br>
-        {% if current_user_info.admin_status or same_user %}
-        <table>
-            <tr>
-            <th>
-                <form action="/editprofile/{{user_page_info.user_id}}" method="GET">
-                    <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Edit profile</button>
-                </form>
-              </th>
-              <th>
-                <form action="/deleteprofile/{{user_page_info.user_id}}" method="POST">
-                    <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Delete user</button>
-                </form>
-              </th>
-            </tr>
-        </table>
-        {% endif %}
+
         <div class="profile-container"align ="middle">
+            {% if current_user_info.admin_status or same_user %}
+            <table>
+                <tr>
+                <th>
+                    <form action="/editprofile/{{user_page_info.user_id}}" method="GET">
+                        <button type="submit" class="btn btn-primary"  style="background-color: red; border-color: black; bottom: 0px">Edit profile</button>
+                    </form>
+                  </th>
+                  <th>
+                    <form action="/deleteprofile/{{user_page_info.user_id}}" method="POST">
+                        <button type="submit" class="btn btn-primary"  style="background-color: red; border-color: black; postition: relative;">Delete account</button>
+                    </form>
+                  </th>
+                </tr>
+            </table>
+            {% endif %}
+        </br>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
             <div class="profile-image">
                 <img src="../static/pfp_{{pfp_num}}.jpg" align="middle" width="100" height="100"> 
             </div>
 
             <h1 class="profile-name">@{{user_page_info.username}}'s Burnbook</h1>
-        </br>
+        
                     <strong>Number of Burns: </strong> </br>{{num_likes}}</br>
    
                     <strong>Number of Posts: </strong> </br>{{num_posts}}
@@ -107,23 +114,26 @@
             <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
             
             <br/>
+            <div class="edit-delete-btns">
             {{ post.post_body }}<br/> <br>
             {% if current_user_info.admin_status or same_user %}
+            
             <table>
                 <tr>
                     <th>
                         <form action="/edit/{{post.post_id}}" method="POST">
-                            <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Edit post</button>
+                            <button type="submit" class="btn btn-primary"  style="background-color: pink; border-color: red;">Edit post</button>
                         </form>
                     </th>
                     <th><p style="color:white">......................</p></th>
                     <th>
                 <form action="/deletepost/{{post.post_id}}" method="POST">
-                    <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Delete post</button>
+                    <button type="submit" class="btn btn-primary"  style="background-color: pink; border-color: red;">Delete post</button>
                 </form>
             </th>
             </tr>
             </table>
+        </div>
             {% endif %}
         </div>
         

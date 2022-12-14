@@ -85,7 +85,7 @@
                   </th>
                   <th>
                     <form action="/deleteprofile/{{user_page_info.user_id}}" method="POST">
-                        <button type="submit" class="btn btn-primary"  style="background-color: red; border-color: black; postition: relative;">Delete account</button>
+                        <button type="submit" class="btn btn-primary"  style="background-color: red; border-color: black; position: relative;">Delete account</button>
                     </form>
                   </th>
                 </tr>
@@ -105,6 +105,7 @@
     </br>
 </br>
 </br>
+</br>
 <h2 align="middle" style="background-color:white; max-width:500px; border-radius:30px">{{user_page_info.username}}'s Posts</h2></br>
 
 {% for post in user_posts | reverse%}
@@ -114,10 +115,11 @@
             <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
             
             <br/>
-            <div class="edit-delete-btns">
+            
             {{ post.post_body }}<br/> <br>
             {% if current_user_info.admin_status or same_user %}
-            
+
+            <div class="edit-delete-btns"></div>
             <table>
                 <tr>
                     <th>

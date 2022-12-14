@@ -1,22 +1,81 @@
 {% extends '_layout.html' %}
 
-{% block body %}
-<h1 class="mb-5"></h1>
-<h2>Had a bad day? Tell everyone how pissed you are!</h2>
-<div class="mb-3">
-    <form action="/posts" method="post" style = "margin-left: 43px;">
-        <div class="col-sm-9">
-            <label for="title" class="form-label">Post Title</label>
-            <input type="text" name="title" id="title" class="form-control" autocomplete="off" required>
-        </div>
-        <div class="col-sm-9">
-            <label for="body" class="form-label">Post Body</label>
-            <textarea class="form-control" name="body" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div> <br/>
-        <div class="col-sm-9">
-        <button type="submit" class="btn btn-danger">Post</button>
+<style>
+    .post-container {
+        max-width: 800px;
+        max-height: 300px;
+        margin: 0 auto;
+        background-color: pink;
+        border: 2px solid rgb(209, 88, 88);
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .comment-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: pink;
+        border: 2px solid rgb(226, 83, 83);
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* .burn-button {
+    bottom: 0;
+    right: 0;
+    } */
+
+    .postview {
+        font-family: sans-serif;
+        background-image: url("../static/deskbook.jpg");
+    }
+
+    .post-container {
+        margin: 0 auto;
+        background: white;
+        border: 2px solid red;
+        border-radius: 40px;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .allpostcont {
+        max-width: 700px;
+        margin: 0 auto;
+        background-color: #F2F2F2;
+        padding: 20px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<body class="postview">
+    <div class="allpostcont">
+
+        <div class="post-container">
+
+            {% block body %}
+            <h1 class="mb-5"></h1>
+            <h2>Had a bad day? Tell everyone how pissed you are!</h2>
+            <div class="mb-3">
+                <form action="/posts" method="post" style="margin-left: 43px;">
+                    <div class="col-sm-9">
+                        <label for="title" class="form-label">Post Title</label>
+                        <input type="text" name="title" id="title" class="form-control" autocomplete="off" required>
+                    </div>
+                    <div class="col-sm-9">
+                        <label for="body" class="form-label">Post Body</label>
+                        <textarea class="form-control" name="body" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div> <br />
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-danger">Post</button>
+
+                    </div>
+                </form>
+            </div>
 
         </div>
-    </form>
-</div>
+    </div>
+</body>
 {% endblock %}

@@ -16,7 +16,7 @@ pfp_num= random.randrange(0,9)
 
 load_dotenv()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URL'] = os.getenv('DATABASE_URL')
 app.config['SESSION_TYPE'] = 'memcached'
 app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)

@@ -16,7 +16,7 @@ pfp_num= random.randrange(0,9)
 
 load_dotenv()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SESSION_TYPE'] = 'memcached'
 app.secret_key = os.getenv('APP_SECRET_KEY')
 db.init_app(app)
@@ -190,6 +190,7 @@ def douse_post(post_id):
 
 @app.post('/deleteprofile/<profile_id>')
 def delete_profile(profile_id):
+    admin_status = Users.query.get(session['user']['user_id']).admin_status
     user_likes = like_repository_singleton.get_user_likes(profile_id)
     for like in user_likes:
         like_repository_singleton.delete_like(like.like_id)
@@ -200,7 +201,7 @@ def delete_profile(profile_id):
             Comment_repository_singleton.delete_comment(comment.comment_id)
         posts_repository_singlton.delete_post(post.post_id)
     profile_repository_singleton.delete_profile(profile_id)
-    if not Users.query.get(session['user']['user_id']).admin_status:
+    if not admin_status:
         return redirect('/signout')
     return redirect('/')
 

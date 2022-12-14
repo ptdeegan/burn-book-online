@@ -200,7 +200,8 @@ def delete_profile(profile_id):
             Comment_repository_singleton.delete_comment(comment.comment_id)
         posts_repository_singlton.delete_post(post.post_id)
     profile_repository_singleton.delete_profile(profile_id)
-    del session['user']
+    if not Users.query.get(session['user']['user_id']).admin_status:
+        del session['user']
     return redirect('/')
 
 @app.post('/deletecomment/<comment_id>')

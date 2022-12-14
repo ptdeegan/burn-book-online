@@ -235,13 +235,13 @@ def edit_profile(user_id):
     fname = request.form.get('fname')
     lname = request.form.get('lname')
     username = request.form.get('username')
-    if Users.query.filter_by(username=username).first():
-        flash('Account already exists with this username, please try again')
-        return redirect(f'/editprofile/{user_id}')
+    # if Users.query.filter_by(username=username).first():
+    #     flash('Account already exists with this username, please try again')
+    #     return redirect(f'/editprofile/{user_id}')
     email = request.form.get('email')
-    if Users.query.filter_by(email=email).first():
-        flash('Account already exists with this email, please try again')
-        return redirect(f'/editprofile/{user_id}')
+    # if Users.query.filter_by(email=email).first():
+    #     flash('Account already exists with this email, please try again')
+    #     return redirect(f'/editprofile/{user_id}')
     user.firstname = fname
     user.lastname = lname
     user.username = username

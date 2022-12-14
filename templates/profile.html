@@ -14,7 +14,7 @@
     }
     .profile-container {
         max-width: 500px;
-        height: 364px;
+        height: 385px;
         margin: 0 auto;
         background-color: pink;
         border:2px solid red;
@@ -31,6 +31,7 @@
         padding: 20px;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
         overflow: auto;
+        max-width: 50%;
     }
     
     
@@ -98,19 +99,25 @@
             </div>
 
             <h1 class="profile-name">@{{user_page_info.username}}'s Burnbook</h1>
-        
+        </br>
                     <strong>Number of Burns: </strong> </br>{{num_likes}}</br>
    
                     <strong>Number of Posts: </strong> </br>{{num_posts}}
+       
     </br>
 </br>
 </br>
 </br>
-<h2 align="middle" style="background-color:white; max-width:500px; border-radius:30px">{{user_page_info.username}}'s Posts</h2></br>
 
+</div>
+<br>
+
+<div align="middle">
+<h2 align="middle" style="background-color:white; max-width:500px; border-radius:30px">{{user_page_info.username}}'s Posts</h2></br>
+</div>
 {% for post in user_posts | reverse%}
 
-        <div class="shadow p-3 mb-5 bg-body rounded col-sm-10 post-container" style="word-wrap: normal;">
+        <div class="shadow p-3 mb-5 bg-body rounded post-container" style="word-wrap: normal;">
             <!--<h2 href="/posts/{{post.post_id}}">{{ post.post_title }}</h2>-->
             <h2><a href="/posts/{{post.post_id}}" class="badge badge-light">{{ post.post_title }}</a></h2>
             
@@ -129,7 +136,6 @@
                         </form>
                         {% endif %}
                     </th>
-                    <th><p style="color:white">......................</p></th>
                     <th>
                 <form action="/deletepost/{{post.post_id}}" method="POST">
                     <button type="submit" class="btn btn-primary"  style="background-color: pink; border-color: red;">Delete post</button>
@@ -142,6 +148,7 @@
         </div>
         
         {% endfor %}
+    </div>
     </body>
     </html>
 {% endblock %}

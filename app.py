@@ -128,9 +128,9 @@ def viewpost(post_id: int):
     if int(poster) == session["user"]["user_id"]:
         same_user = True
 
-    if single_post.post_body == "Burned!":
-        burned = True
-    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info, same_user=same_user, num_burns=num_burns, poster=poster, postburned = burned)
+    #if single_post.post_body == "Burned!":
+        #burned = True
+    return render_template('viewpost.html', current_post=single_post, comments = post_comments, current_user_info=current_user_info, same_user=same_user, num_burns=num_burns, poster=poster)
 
 @app.post('/comment')
 def add_comment():

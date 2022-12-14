@@ -48,9 +48,11 @@
         <table>
             <tr>
                 <th>
+                    {% if post.post_body != "Burned!" %}
                     <form action="/edit/{{post.post_id}}" method="POST">
                         <button type="submit" class="btn btn-primary"  style="background-color: pink;" style="border-color: red;">Edit post</button>
                     </form>
+                    {% endif %}
                 </th>
                 <th>
             <form action="/deletepost/{{post.post_id}}" method="POST">
